@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\KaryawanController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,7 +16,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('manajemen_karyawan.index');
+    return view('welcome');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('karyawan', KaryawanController::class);
 });
 
 Auth::routes();
