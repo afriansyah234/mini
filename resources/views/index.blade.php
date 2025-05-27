@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    puny a
 </body>
 
 </html>
