@@ -21,9 +21,12 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap Icons CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.js"></script>
 </head>
 
 <body>
@@ -43,18 +46,21 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                             <a class="nav-link {{ request()->routeIs('project.index') ? 'active border-bottom border-dark' : '' }}" href="{{ route('project.index') }}">Manajemen Project</a>
-                    </li>
-                    
+                            <a class="nav-link {{ request()->routeIs('project.index') ? 'active border-bottom border-dark' : '' }}"
+                                href="{{ route('project.index') }}">Manajemen Project</a>
+                        </li>
+
                         <li class="nav-item">
-                             <a class="nav-link {{ request()->routeIs('tugas.index') ? 'active border-bottom border-dark' : '' }}" href="{{ route('tugas.index') }}">Manajemen Tugas</a>
-                            </li>
-                    
+                            <a class="nav-link {{ request()->routeIs('tugas.index') ? 'active border-bottom border-dark' : '' }}"
+                                href="{{ route('tugas.index') }}">Manajemen Tugas</a>
+                        </li>
+
                         <li class="nav-item">
-                             <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-danger' : '' }}" href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
-                    </li>
-                </ul>
-                  
+                            <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-danger' : '' }}"
+                                href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
+                        </li>
+                    </ul>
+
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
@@ -81,7 +87,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                 document.getElementById('logout-form').submit();">
+                                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
