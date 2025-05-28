@@ -37,8 +37,9 @@ class TugasController extends Controller
      */
     public function show(Tugas $tugas)
     {
-        //
-    }
+        $tugas= Tugas::all();
+        return view('tugas.index',compact('tugas'))
+;    }
 
     /**
      * Show the form for editing the specified resource.
