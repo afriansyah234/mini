@@ -36,7 +36,7 @@ class ProjectController extends Controller
 
             'nama_project'=>'required|string',
             'deskripsi'=>'required|string',
-            'status_project'=>'required|ein:perencanaan,berjalan,ditunda,selesai',
+            'status_project'=>'nullable|in:perencanaan,berjalan,ditunda,selesai',
             'karyawan_id'=>'required|exists:karyawans,id'
         ]);
         Project::create([
