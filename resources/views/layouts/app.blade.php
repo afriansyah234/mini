@@ -41,24 +41,20 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <!-- <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('karyawan.index') }}">Dashboard</a></li>
-                    </ul> -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('manajemen_project.index') }}">Manajemen Project</a></li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('manajemen_tugas.index') }}">Manajemen Tugas</a></li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('manajemen_karyawan.index') }}">Manajemen Karyawan</a></li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('kolaborasi.index') }}">Kolaborasi</a></li>
-                    </ul>
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item"> <a href="{{ route('laporan_analis.index') }}">Laporan & Analytisc</a></li>
-                    </ul>
+                        <li class="nav-item">
+                             <a class="nav-link {{ request()->routeIs('project.index') ? 'active border-bottom border-dark' : '' }}" href="{{ route('project.index') }}">Manajemen Project</a>
+                    </li>
+                    
+                        <li class="nav-item">
+                             <a class="nav-link {{ request()->routeIs('tugas.index') ? 'active border-bottom border-dark' : '' }}" href="{{ route('tugas.index') }}">Manajemen Tugas</a>
+                            </li>
+                    
+                        <li class="nav-item">
+                             <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-danger' : '' }}" href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
+                    </li>
+                </ul>
+                  
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

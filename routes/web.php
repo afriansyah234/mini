@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\KaryawanController;
-use App\Http\Controller\TugasController;
+use App\Http\Controllers\TugasController;
+use App\Http\Controllers\ProjectController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('karyawan', KaryawanController::class);
+    Route::resource('tugas', TugasController::class);
+    Route::resource('project', ProjectController::class);
 });
 
 Auth::routes();
