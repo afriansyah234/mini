@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item"> <a href="{{ route('manajemen_tugas.index') }}">Manajemen Tugas</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

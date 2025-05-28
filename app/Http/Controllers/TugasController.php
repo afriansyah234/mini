@@ -12,7 +12,8 @@ class TugasController extends Controller
      */
     public function index()
     {
-        //
+        $tugas = Tugas::all();
+        return view('manajemen_tugas.index',compact('tugas'));
     }
 
     /**
