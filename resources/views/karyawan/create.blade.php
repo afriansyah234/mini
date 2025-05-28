@@ -8,8 +8,8 @@
                         <form action="{{ route('karyawan.store') }}" method="POST" class="needs-validation" novalidate>
                             @csrf
                             <div class="mb-3">
-                                <label for="Nama_karyawan" class="form-label">Nama karyawan</label>
-                                <input type="text" class="form-control" id="Nama_karyawan" name="Nama_karyawan" required>
+                                <label for="nama_karyawan" class="form-label">Nama karyawan</label>
+                                <input type="text" class="form-control" id="nama_karyawan" name="nama_karyawan" required>
                                 <div class="invalid-feedback">
                                     Nama karyawan karyawan harus diisi.
                                 </div>

@@ -36,13 +36,12 @@ class ProjectController extends Controller
 
             'nama_project'=>'required|string',
             'deskripsi'=>'required|string',
-            'status_project'=>'nullable|string',
+            'status_project'=>'required|ein:perencanaan,berjalan,ditunda,selesai',
             'karyawan_id'=>'required|exists:karyawans,id'
         ]);
         Project::create([
             'nama_project'=>$validated['nama_project'],
             'deskripsi'=>$validated['deskripsi'],
-            'status_project'=>'',
             'karyawan_id'=>$validated['karyawan_id']
         ]);
         return redirect()->route('project.index')->with('success','Project berhasil dibuat');
@@ -63,7 +62,7 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::findOrFail($id);
-        $karyawan = Karyawan::all();
+        $karyawans = Karyawan::all();
         return view('project.edit',compact('project','karyawans'));
     }
 
@@ -76,7 +75,7 @@ class ProjectController extends Controller
 
             'nama_project'=>'required|string',
             'deskripsi'=>'required|string',
-            'status_project'=>'nullable|string',
+            'status_project'=>'required|in:perencanaan,berjalan,ditunda,selesai',
             'karyawan_id'=>'required|exist:karyawans,id'
         ]);
         $project = Project::findOrFail($id);

@@ -31,7 +31,7 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validasi = $request->validate([
-            'Nama_karyawan' => 'required',
+            'nama_karyawan' => 'required',
             'email' => 'required|email|unique:karyawans,email',
             'departemen' => 'required'
         ]);
@@ -63,7 +63,7 @@ class KaryawanController extends Controller
     public function update(Request $request, $id)
     {
         $validasi = $request->validate([
-            'Nama_karyawan' => 'required',
+            'nama_karyawan' => 'required',
             'email' => 'required',
             'departemen' => 'required'
         ]);

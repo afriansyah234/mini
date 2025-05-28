@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nama_project');
             $table->string('deskripsi');
-            $table->string('status_project')->default('berjalan');
+            $table->enum('status_project',['perencanaan','berjalan','ditunda','selesai']);
             $table->foreignId('karyawan_id')->constrained();
             $table->timestamps();
         });

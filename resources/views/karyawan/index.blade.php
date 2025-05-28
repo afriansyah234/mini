@@ -25,7 +25,7 @@
                                             @foreach ($karyawans as $karyawan)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $karyawan->Nama_karyawan }}</td>
+                                                    <td>{{ $karyawan->nama_karyawan }}</td>
                                                     <td>{{ $karyawan->email }}</td>
                                                     <td>{{ $karyawan->departemen }}</td>
                                                     <td>

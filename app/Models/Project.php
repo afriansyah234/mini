@@ -17,6 +17,6 @@ class Project extends Model
     protected $table = 'projects';
 
     public function karyawan(){
-        return $this->belongsTo(Project::class,'karyawan_id');
+        return $this->belongsTo(Karyawan::class,'karyawan_id');
     }
 }
