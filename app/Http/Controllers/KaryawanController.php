@@ -21,7 +21,8 @@ class KaryawanController extends Controller
      */
     public function create()
     {
-        //
+        $karyawans = Karyawan::all();
+        return view('manajemen_karyawan.create', compact('karyawans'));
     }
 
     /**
@@ -29,7 +30,13 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validasi = $request->validate([
+            'Nama_karyawan' => 'required',
+            'email' => 'required|email|unique:karyawans,email',
+            'departemen' => 'required'
+        ]);
+        Karyawan::create($validasi);
+        return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil ditambahkan');
     }
 
     /**
@@ -43,24 +50,40 @@ class KaryawanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Karyawan $karyawan)
+    public function edit($id)
     {
-        //
+        $karyawans = Karyawan::all();
+        $karyawans = Karyawan::findOrFail(id: $id);
+        return view('manajemen_karyawan.edit', compact('karyawans'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Karyawan $karyawan)
+    public function update(Request $request, $id)
     {
-        //
+        $validasi = $request->validate([
+            'Nama_karyawan' => 'required',
+            'email' => 'required',
+            'departemen' => 'required'
+        ]);
+
+        $karyawans = Karyawan::findOrFail($id);
+        $karyawans->update($validasi);
+
+        return redirect()->route('karyawan.index')->with('success', 'karyawan bertambah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Karyawan $karyawan)
+    public function destroy($id)
     {
-        //
+        try {
+            Karyawan::findOrFail($id)->delete();
+            return redirect()->route('karyawan.index')->with('success', 'karyawan berhasil dihapus');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'tidak berhasil');
+        }
     }
 }
