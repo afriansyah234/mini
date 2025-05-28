@@ -41,8 +41,23 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
+                    <!-- <ul class="navbar-nav me-auto">
+                        <li class="nav-item"> <a href="{{ route('karyawan.index') }}">Dashboard</a></li>
+                    </ul> -->
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"> <a href="{{ route('manajemen_project.index') }}">Manajemen Project</a></li>
+                    </ul>
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item"> <a href="{{ route('manajemen_tugas.index') }}">Manajemen Tugas</a></li>
+                    </ul>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"> <a href="{{ route('manajemen_karyawan.index') }}">Manajemen Karyawan</a></li>
+                    </ul>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"> <a href="{{ route('kolaborasi.index') }}">Kolaborasi</a></li>
+                    </ul>
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"> <a href="{{ route('laporan_analis.index') }}">Laporan & Analytisc</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
