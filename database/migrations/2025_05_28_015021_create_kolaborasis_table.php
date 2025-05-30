@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('kolaborasis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('karyawan_id')->constrained();
             $table->timestamps();
         });
     }
