@@ -12,7 +12,8 @@ return new class extends Migration {
     {
         Schema::create('status_tugas', function (Blueprint $table) {
             $table->id();
-            $table->enum('nama_status', ['belum dimulai', 'dalam pengerjaan', 'menunggu review', 'selesai']);
+            // $table->enum('nama_status', ['belum dimulai', 'dalam pengerjaan', 'menunggu review', 'selesai']);
+            $table->string('nama_status');
             $table->timestamps();
         });
     }

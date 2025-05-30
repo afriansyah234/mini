@@ -49,9 +49,11 @@
                                 <label for="prioritas" class="form-label">Prioritas</label>
                                 <select class="form-select @error('prioritas') is-invalid @enderror" id="prioritas" name="prioritas" required>
                                     <option value="" disabled selected>Pilih Prioritas</option>
-                                    <option value="low" {{ old('prioritas') == 'low' ? 'selected' : '' }}>Rendah</option>
-                                    <option value="medium" {{ old('prioritas') == 'medium' ? 'selected' : '' }}>Sedang</option>
-                                    <option value="high" {{ old('prioritas') == 'high' ? 'selected' : '' }}>Tinggi</option>
+                                    <option value="rendah" {{ old('prioritas') == 'rendah' ? 'selected' : '' }}>Rendah</option>
+                                    <option value="sedang" {{ old('prioritas') == 'sedang' ? 'selected' : '' }}>Sedang</option>
+                                    <option value="tinggi" {{ old('prioritas') == 'tinggi' ? 'selected' : '' }}>Tinggi</option>
+                                    <option value="krisis" {{ old('prioritas') == 'krisis' ? 'selected' : '' }}>krisis</option>
+
                                 </select>
                                 @error('prioritas')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -59,16 +61,16 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="status_id" class="form-label">Status</label>
-                                <select class="form-select @error('status_id') is-invalid @enderror" id="status_id" name="status_id" required>
+                                <label for="status_tugas_id" class="form-label">Status</label>
+                                <select class="form-select @error('status_tugas_id') is-invalid @enderror" id="status_tugas_id" name="status_tugas_id" required>
                                     <option value="" disabled selected>Pilih Status</option>
                                     @foreach($statuses as $status)
-                                        <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                        <option value="{{ $status->id }}" {{ old('status_tugas_id') == $status->id ? 'selected' : '' }}>
                                             {{ $status->nama_status }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('status_id')
+                                @error('status_tugas_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->string('judul_tugas');
             $table->string('deskripsi');
             $table->enum('prioritas', ['rendah', 'sedang', 'tinggi', 'krisis']);
-            $table->foreignId('status_tugas_id')->constrained();
+            $table->foreignId('status_tugas_id')->constrained('status_tugas')->default(1);
             $table->timestamps();
         });
     }

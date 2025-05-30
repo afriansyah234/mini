@@ -37,8 +37,8 @@ class TugasController extends Controller
             'project_id' => 'required|exists:projects,id',
             'judul_tugas' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
-            'prioritas' => 'required|in:low,medium,high',
-            'status_id' => 'required|exists:statuses,id'
+            'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
+            'status_tugas_id' => 'required|exists:status_tugas,id'
         ]);
 
         Tugas::create($validated);
