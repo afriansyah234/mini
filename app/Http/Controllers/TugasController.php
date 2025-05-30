@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tugas;
+use App\Models\Project;
+use App\Models\Status_tugas;
 use Illuminate\Http\Request;
 
 class TugasController extends Controller
@@ -12,8 +14,8 @@ class TugasController extends Controller
      */
     public function index()
     {
-        $tugas = Tugas::all();
-        return view('manajemen_tugas.index',compact('tugas'));
+        $tugass = Tugas::with(['status', 'project'])->get();
+        return view('tugas.index', compact('tugass'));
     }
 
     /**
@@ -21,7 +23,9 @@ class TugasController extends Controller
      */
     public function create()
     {
-        //
+        $projects = Project::all();
+        $statuses = Status_tugas::all();
+        return view('tugas.create', compact('projects', 'statuses'));
     }
 
     /**
@@ -29,7 +33,17 @@ class TugasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'judul_tugas' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'prioritas' => 'required|in:low,medium,high',
+            'status_id' => 'required|exists:statuses,id'
+        ]);
+
+        Tugas::create($validated);
+
+        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil ditambahkan');
     }
 
     /**
@@ -37,9 +51,10 @@ class TugasController extends Controller
      */
     public function show(Tugas $tugas)
     {
-        $tugas= Tugas::all();
-        return view('tugas.index',compact('tugas'))
-;    }
+        $tugas = Tugas::all();
+        return view('tugas.index', compact('tugas'))
+        ;
+    }
 
     /**
      * Show the form for editing the specified resource.

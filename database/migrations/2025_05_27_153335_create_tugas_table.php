@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->foreignId('project_id')->constrained();
             $table->string('judul_tugas');
             $table->string('deskripsi');
-            $table->string('prioritas');
-            $table->string('status_id')->default('berjalan');
+            $table->enum('prioritas', ['rendah', 'sedang', 'tinggi', 'krisis']);
+            $table->foreignId('status_tugas_id')->constrained();
             $table->timestamps();
         });
     }

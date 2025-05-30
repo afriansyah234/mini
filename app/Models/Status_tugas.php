@@ -13,5 +13,10 @@ class Status_tugas extends Model
         'nama_status'
     ];
 
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class, 'status_tugas_id');
+    }
+
 
 }
