@@ -10,7 +10,6 @@
             <table class="table table-bordered shadow mt-4">
                 <thead class="text-center">
                     <tr>
-                        <th>project</th>
                         <th>judul tugas</th>
                         <th>deskripsi</th>
                         <th>prioritas</th>
@@ -24,7 +23,6 @@
                     </tr> @else
                         @foreach ($tugass as $tugas)
                             <tr>
-                                <td>{{ $tugas->project->nama_project }}</td>
                                 <td>{{ $tugas->judul_tugas }}</td>
                                 <td>{{ $tugas->deskripsi }}</td>
                                 <td>{{ $tugas->prioritas }}</td>
