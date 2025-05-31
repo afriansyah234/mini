@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('laporans', function (Blueprint $table) {
             $table->id();
+            $table->string('foto_bukti');
+            $table->foreignId('project_id')->constrained();
+            $table->string('atas_nama');
+            $table->date('tanggal_laporan');
+            $table->string('deskripsi_laporan');
+            $table->string('status_laporan_id');
             $table->timestamps();
         });
     }
