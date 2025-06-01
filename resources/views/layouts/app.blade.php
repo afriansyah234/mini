@@ -58,7 +58,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active border-bottom border-danger' : '' }}"
-                                href="{{ route('laporan.index') }}">Manajemen Karyawan</a>
+                                href="{{ route('laporan.index') }}">Laporan</a>
                         </li>
                     </ul>
 
