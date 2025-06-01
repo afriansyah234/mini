@@ -56,6 +56,10 @@
                             <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-danger' : '' }}"
                                 href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active border-bottom border-danger' : '' }}"
+                                href="{{ route('laporan.index') }}">Manajemen Karyawan</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
