@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KaryawanController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\LaporanController;
 use App\Models\Laporan;
 
 /*
@@ -28,11 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('karyawan', KaryawanController::class);
     Route::resource('tugas', TugasController::class);
     Route::resource('project', ProjectController::class);
-<<<<<<< Updated upstream
     Route::resource('laporan',LaporanController::class);
-=======
-    route::resource('laporan', LaporanController::class);
->>>>>>> Stashed changes
 });
 
 Auth::routes();

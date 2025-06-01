@@ -24,7 +24,9 @@
                         <td>{{ $project->deskripsi }}</td>
                         <td>{{ $project->status_project }}</td>
                         <td>{{ $project->karyawan->nama_karyawan  ?? '-'}}</td>
-                        <td>
+                        <td class="d-flex justify-content-center">
+                            <a class="btn btn-primary" href="{{ route('laporan.create', ['project_id' => $project->id]) }}">Kumpulkan</a>
+
                             <a class="btn btn-warning" href="{{ route('project.show',$project->id) }}">detail</a>
                             <form action="{{ route('project.destroy',$project->id) }}">
                                 @csrf

@@ -70,6 +70,11 @@
                                 <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div>
+                        <input type="hidden" name="tanggal_laporan" value="{{ \Carbon\Carbon::now()->toDateString() }}">
+
+                        </div>
+
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="{{ route('laporan.index') }}" class="btn btn-secondary me-md-2">

@@ -11,6 +11,8 @@ class Laporan extends Model
     protected $fillable = [
         'project_id',
         'atas_nama',
+        'tanggal_laporan',
+        'statuslaporan',
         'deskripsi_laporan',
     ];
 

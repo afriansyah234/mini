@@ -44,6 +44,8 @@ class LaporanController extends Controller
             'deskripsi_laporan' => 'nullable|string',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:5120' // 5MB
         ]);
+        $validated['tanggal_laporan'] = now()->toDateString();// Atur tanggal laporan ke tanggal saat ini
+        $validated['statuslaporan'] = 'sedang di cek';
 
         // Simpan data laporan utama TANPA lampiran
         $laporan = Laporan::create($validated);
@@ -82,8 +84,7 @@ class LaporanController extends Controller
      */
     public function edit(Laporan $laporan)
     {
-        $statuslaporan = StatusLaporan::all();
-        return view('laporan.edit', compact('laporan', 'statuslaporan'));
+        //
     }
 
     /**
@@ -91,11 +92,7 @@ class LaporanController extends Controller
      */
     public function update(Request $request, Laporan $laporan)
     {
-        $validated = $request->validate([
-            'status_laporan_id' => 'required|exits:status_laporan,id'
-        ]);
-        $laporan->update();
-        return redirect()->route('laporan.index')->with('success', 'Status Telah di update');
+       //
     }
 
     /**
@@ -103,7 +100,7 @@ class LaporanController extends Controller
      */
     public function destroy($id)
     {
-        $laporan = Project::findOrFail($id);
+       $laporan = Laporan::findOrFail($id);
         $laporan->delete();
         return redirect()->route('laporan.index')->with('success', 'laporan sudah dihapus');
     }
