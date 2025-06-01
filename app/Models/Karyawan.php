@@ -15,8 +15,14 @@ class Karyawan extends Model
     ];
 
     protected $table = 'karyawans';
-    public function project(){
+    public function project()
+    {
         return $this->hasMany(Project::class);
+    }
+
+    public function laporan()
+    {
+        return $this->hasMany(Laporan::class, 'atas_nama');
     }
 
 }

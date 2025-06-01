@@ -7,6 +7,15 @@
                 <a href="{{ route('tugas.create') }}" class="btn btn-secondary"><i class="fas fa-plus me-2"></i>tambah
                     tugas</a>
             </div>
+            <form class="row g-3" action="{{ route('tugas.index') }}">
+                <div class="col-auto">
+                    <label for="" class="visually-hidden">search</label>
+                    <input type="search" class="form-control" id="search" placeholder="search">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary mb-3">search</button>
+                </div>
+            </form>
             <table class="table table-bordered shadow mt-4">
                 <thead class="text-center">
                     <tr>

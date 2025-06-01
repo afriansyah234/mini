@@ -9,18 +9,26 @@ class Laporan extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'foto_bukti',
         'project_id',
-        'tugas_id',
         'atas_nama',
-        'tanggal_laporan',
         'deskripsi_laporan',
-        'status_laporan_id'
     ];
 
     protected $table = 'laporans';
 
-    public function status_laporan() {
-    $this->belongsTo(Laporan::class,'status_laporan_id');
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'atas_nama');
+    }
+
+    // app/Models/Laporan.php
+    public function lampiran()
+    {
+        return $this->hasOne(Lampiran::class, 'laporan_id');
     }
 }

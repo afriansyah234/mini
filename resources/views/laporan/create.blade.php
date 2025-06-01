@@ -2,46 +2,86 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-
-            <h3 class="mb-4">Buat Laporan Baru</h3>
-
-            <form action="{{ route('laporan.store') }}" method="POST">
-                @csrf
-
-                <div class="row g-3">
-                    <div class="col-md-12">
-                        <label for="tanggal_laporan" class="form-label">Tanggal Laporan</label>
-                        <input type="date" name="tanggal_laporan" class="form-control" value="{{ now()->toDateString() }}" readonly>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="project_id" class="form-label">Nama Project</label>
-                        <select name="project_id" id="project_id" class="form-control" required>
-                            <option disabled selected>-- Pilih Project --</option>
-                            @foreach ($projects as $project)
-                                <option value="{{ $project->id }}">{{ $project->nama_project }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="atas_nama" class="form-label">Atas Nama</label>
-                        <input type="text" name="atas_nama" class="form-control" required>
-                    </div>
-
-                    <div class="col-md-12">
-                        <label for="deskripsi_laporan" class="form-label">Deskripsi Laporan</label>
-                        <textarea name="deskripsi_laporan" class="form-control" rows="4"></textarea>
-                    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Buat Laporan Baru</h3>
                 </div>
 
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary">Simpan Laporan</button>
-                </div>
+                <div class="card-body">
+                    <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-            </form>
+                        <!-- Nama Project -->
+                        <div class="mb-3">
+                            <label for="project_id" class="form-label">Nama Project <span class="text-danger">*</span></label>
+                            <select name="project_id" id="project_id" class="form-select" required>
+                                <option disabled selected>-- Pilih Project --</option>
+                                @foreach ($projects as $project)
+                                    <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
+                                        {{ $project->nama_project }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('project_id')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Atas Nama -->
+                        <div class="mb-3">
+                            <label for="atas_nama" class="form-label">Atas Nama <span class="text-danger">*</span></label>
+                            <select name="atas_nama" id="atas_nama" class="form-select" required>
+                                <option disabled selected>-- Pilih Karyawan --</option>
+                                @foreach ($karyawans as $karyawan)
+                                    <option value="{{ $karyawan->id }}" {{ old('atas_nama') == $karyawan->id ? 'selected' : '' }}>
+                                        {{ $karyawan->nama_karyawan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('atas_nama')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Deskripsi -->
+                        <div class="mb-3">
+                            <label for="deskripsi_laporan" class="form-label">Deskripsi Laporan</label>
+                            <textarea name="deskripsi_laporan" id="deskripsi_laporan" class="form-control" rows="4">{{ old('deskripsi_laporan') }}</textarea>
+                            @error('deskripsi_laporan')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Upload Lampiran -->
+                        <div class="mb-4">
+                            <label for="lampiran" class="form-label">Lampiran File</label>
+                            <input 
+                                type="file" 
+                                class="form-control" 
+                                id="lampiran" 
+                                name="lampiran[]" 
+                                multiple
+                                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
+                            >
+                            <small class="text-muted">Format: PDF, JPG, PNG, DOC, XLS (Maks. 5MB/file)</small>
+                            @error('lampiran.*')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{{ route('laporan.index') }}" class="btn btn-secondary me-md-2">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan Laporan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

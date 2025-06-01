@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lampiran;
 use App\Models\Laporan;
 use App\Models\Project;
 use App\Models\StatusLaporan;
-use App\Models\Tugas;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 
 class LaporanController extends Controller
 {
@@ -15,8 +17,8 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $laporans = Laporan::all();
-        return view('laporan.index',compact('laporans'));
+        $laporans = Laporan::with(['project', 'karyawan', 'lampiran'])->get();
+        return view('laporan.index', compact('laporans'));
     }
 
     /**
@@ -25,7 +27,9 @@ class LaporanController extends Controller
     public function create()
     {
         $laporans = Laporan::all();
-        return view('laporan.create',compact('laporans'));
+        $projects = Project::all();
+        $karyawans = Karyawan::all();
+        return view('laporan.create', compact('laporans', 'projects', 'karyawans'));
     }
 
     /**
@@ -33,18 +37,34 @@ class LaporanController extends Controller
      */
     public function store(Request $request)
     {
+        // Validasi input
         $validated = $request->validate([
             'project_id' => 'required|exists:projects,id',
-            'tugas_id' => 'required|exists:tugas,id',
-            'atas_nama' => 'required|string',
-            'deskripsi_laporan' => 'nullable|string'
-
+            'atas_nama' => 'required|exists:karyawans,id',
+            'deskripsi_laporan' => 'nullable|string',
+            'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:5120' // 5MB
         ]);
-        $validated['tanggal_laporan'] = now()->toDateString();
-        $project = Project::findOrFail($validated['project_id']);
-        $tugas = Tugas::findOrFail($validated['tugas_id']);
+
+        // Simpan data laporan utama TANPA lampiran
         $laporan = Laporan::create($validated);
-        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil disimpan.');
+
+        // Proses upload lampiran jika ada
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->file('lampiran') as $file) {
+                $path = $file->store('file_laporan', 'public'); // Simpan di storage/app/public/file_laporan
+
+                // Simpan info file ke tabel lampiran
+                Lampiran::create([
+                    'laporan_id' => $laporan->id,
+                    'nama_file' => $file->getClientOriginalName(),
+                    'path' => $path,
+                    'ukuran' => $file->getSize(),
+                    'jenis' => $file->getClientOriginalExtension()
+                ]);
+            }
+        }
+
+        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil dibuat!');
     }
 
     /**
@@ -54,7 +74,7 @@ class LaporanController extends Controller
     {
         $statuslaporans = StatusLaporan::all();
         $laporans = Laporan::findOrFail($id);
-        return view('laporan.show',compact('statuslaporan','laporans'));
+        return view('laporan.show', compact('statuslaporan', 'laporans'));
     }
 
     /**
@@ -63,7 +83,7 @@ class LaporanController extends Controller
     public function edit(Laporan $laporan)
     {
         $statuslaporan = StatusLaporan::all();
-        return view('laporan.edit',compact('laporan','statuslaporan'));
+        return view('laporan.edit', compact('laporan', 'statuslaporan'));
     }
 
     /**
@@ -74,8 +94,8 @@ class LaporanController extends Controller
         $validated = $request->validate([
             'status_laporan_id' => 'required|exits:status_laporan,id'
         ]);
-        $laporan->update(); 
-        return redirect()->route('laporan.index')->with('success','Status Telah di update');
+        $laporan->update();
+        return redirect()->route('laporan.index')->with('success', 'Status Telah di update');
     }
 
     /**
@@ -85,15 +105,15 @@ class LaporanController extends Controller
     {
         $laporan = Project::findOrFail($id);
         $laporan->delete();
-        return redirect()->route('laporan.index')->with('success','laporan sudah dihapus');
+        return redirect()->route('laporan.index')->with('success', 'laporan sudah dihapus');
     }
 
     public function selesai(Laporan $laporan)
-{
-    // Asumsikan kamu punya status dengan id tertentu untuk 'Selesai', misalnya id = 2
-    $laporan->status_laporan_id = 'selesai'; // ganti sesuai ID status 'Selesai' di tabel status_laporans
-    $laporan->save();
+    {
+        // Asumsikan kamu punya status dengan id tertentu untuk 'Selesai', misalnya id = 2
+        $laporan->status_laporan_id = 'selesai'; // ganti sesuai ID status 'Selesai' di tabel status_laporans
+        $laporan->save();
 
-    return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diselesaikan.');
-}
+        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diselesaikan.');
+    }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-     protected $fillable = [
+    protected $fillable = [
         'nama_project',
         'deskripsi',
         'status_project',
@@ -16,7 +16,13 @@ class Project extends Model
     ];
     protected $table = 'projects';
 
-    public function karyawan(){
-        return $this->belongsTo(Karyawan::class,'karyawan_id');
+    public function karyawan()
+    {
+        return $this->belongsTo(Karyawan::class, 'karyawan_id');
+    }
+
+    public function laporan()
+    {
+        return $this->hasMany(Laporan::class, 'project_id');
     }
 }
