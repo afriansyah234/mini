@@ -24,6 +24,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+
 </head>
 
 <body>
@@ -53,11 +54,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-danger' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active border-bottom border-danger' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('laporan.index') }}">Laporan</a>
                         </li>
                     </ul>
