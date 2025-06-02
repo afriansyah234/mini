@@ -3,6 +3,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                   <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                 <h1>Manajemen Karyawan</h1>
                 <a href="{{ route('karyawan.create') }}" class="btn btn-primary"><i class="fas fa-plus me-2"></i>
                     tambah karyawan</a>

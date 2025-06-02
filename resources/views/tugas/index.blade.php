@@ -5,6 +5,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
+                       <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Terjadi kesalahan:</strong>
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                     <h1>Manajemen Tugas</h1>
                     <a href="{{ route('tugas.create') }}" class="btn btn-secondary">
                         <i class="fas fa-plus me-2"></i>Tambah Tugas
