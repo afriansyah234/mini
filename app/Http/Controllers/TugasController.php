@@ -12,10 +12,39 @@ class TugasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tugass = Tugas::with(['status', 'project'])->get();
-        return view('tugas.index', compact('tugass'));
+        $query = Tugas::with(['status', 'project']);
+
+        // Search by keyword
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('judul_tugas', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%")
+                    ->orWhereHas('status', function ($q) use ($search) {
+                        $q->where('nama_status', 'like', "%{$search}%");
+                    })
+                    ->orWhereHas('project', function ($q) use ($search) {
+                        $q->where('nama_project', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        // Filter by priority
+        if ($request->has('prioritas') && $request->prioritas != '') {
+            $query->where('prioritas', $request->prioritas);
+        }
+
+        // Filter by project
+        if ($request->has('project_id') && $request->project_id != '') {
+            $query->where('project_id', $request->project_id);
+        }
+
+        $tugass = $query->paginate(10);
+        $projects = Project::all(); // Untuk dropdown filter project
+
+        return view('tugas.index', compact('tugass', 'projects'));
     }
 
     /**
