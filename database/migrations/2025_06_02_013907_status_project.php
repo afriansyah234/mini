@@ -10,12 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create("status_projects", function (Blueprint $table) {
             $table->id();
-            $table->string('nama_project');
-            $table->string('deskripsi');
-            $table->enum('status_project',['perencanaan','berjalan','ditunda','selesai']);
-            $table->foreignId('karyawan_id')->constrained();
+            $table->string("status_project");
             $table->timestamps();
         });
     }
@@ -25,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        //
     }
 };

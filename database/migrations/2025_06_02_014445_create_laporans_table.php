@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('project_id')->constrained('projects');
             $table->foreignId('atas_nama')->constrained('karyawans');
             $table->date('tanggal_laporan');
-            $table->string('statuslaporan',)->default('sedang di cek'); 
+            $table->string('statuslaporan', )->default('sedang di cek');
             $table->string('deskripsi_laporan');
             $table->timestamps();
         });
