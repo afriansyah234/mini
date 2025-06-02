@@ -62,28 +62,35 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        $project = Project::findOrFail($id);
+        $statusProjects = StatusProject::all();
         $karyawans = Karyawan::all();
-        return view('project.edit', compact('project', 'karyawans'));
+
+        return view('project.edit', compact('project', 'statusProjects', 'karyawans'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
         $validated = $request->validate([
-
-            'nama_project' => 'required|string',
+            'nama_project' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'status_project' => 'required|in:perencanaan,berjalan,ditunda,selesai',
-            'karyawan_id' => 'required|exist:karyawans,id'
+            'status_project' => 'required|exists:status_projects,id',
+            'karyawan_id' => 'required|exists:karyawans,id'
         ]);
-        $project = Project::findOrFail($id);
-        $project->update($validated);
-        return redirect()->route('project.index')->with('success', 'Project berhasil di perbaharui');
+
+        $project->update([
+            'nama_project' => $validated['nama_project'],
+            'deskripsi' => $validated['deskripsi'],
+            'status_project' => $validated['status_project'],
+            'karyawan_id' => $validated['karyawan_id']
+        ]);
+
+        return redirect()->route('project.index')
+            ->with('success', 'Project updated successfully.');
     }
 
     /**

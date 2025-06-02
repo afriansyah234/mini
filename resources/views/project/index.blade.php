@@ -23,11 +23,23 @@
                             <tr>
                                 <td>{{ $project->nama_project }}</td>
                                 <td>{{ $project->deskripsi }}</td>
-                                <td>{{ $project->status->status_project }}</td>
+                                <td>
+                                    @php
+                                        $badge = [
+                                            'perencanaan' => 'bg-secondary',
+                                            'berjalan' => 'bg-warning',
+                                            'ditunda' => 'bg-warning',
+                                            'selesai' => 'bg-success'
+                                        ][$project->status->status_project] ?? 'bg-secondary'
+                                    @endphp
+                                    <span class="badge {{ $badge }}">
+                                        {{ ucfirst($project->status->status_project) }}
+                                    </span>
+                                </td>
                                 <td>{{ $project->karyawan->nama_karyawan ?? '-'}}</td>
                                 <td class="d-flex justify-content-center">
                                     <a class="btn btn-warning me-2" href="{{ route('project.show', $project->id) }}">detail</a>
-                                    <form action="{{ route('project.destroy', $project->id) }}">
+                                    <form action="{{ route('project.destroy', $project->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn btn-danger">Hapus</button>

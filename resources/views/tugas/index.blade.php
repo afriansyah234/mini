@@ -13,7 +13,7 @@
 
 
                 <form action="{{ route('tugas.index') }}" method="GET" class="row g-3 mb-4">
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <input type="search" name="search" class="form-control"
                             placeholder="Cari berdasarkan judul, deskripsi, project atau status..."
                             value="{{ request('search') }}">
@@ -73,7 +73,7 @@
                                                         'dalam pengerjaan' => 'bg-warning',
                                                         'menunggu review' => 'bg-warning',
                                                         'selesai' => 'bg-success'
-                                                    ][$tugas->status->nama_status] ?? 'bg-ssecondary'
+                                                    ][$tugas->status->nama_status] ?? 'bg-secondary'
                                                 @endphp
                                                 <span class="badge {{ $badge }}">
                                                     {{ ucfirst($tugas->status->nama_status) }}
