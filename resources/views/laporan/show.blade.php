@@ -6,13 +6,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <h2>Detail Project</h2>
-                                <p>Nama Project : {{ $laporan->atas_nama }}</p>
+                                <p>Nama Project : {{ $laporan->project->nama_project }}</p>
                                 <p>Deskripsi : {{ $laporan->deskripsi_laporan }}</p>
                                 <p>Status : {{ $laporan->statuslaporan }}</p>
-                                <p>Penanggung Jawab : {{  $laporan-> }}</p>
+                                <p>Penanggung Jawab : {{  $laporan->karyawan->nama_karyawan }}</p>
+                                <p>tanggal dibuat : {{ $laporan->created_at->format('d/m/Y H:i') }}</p>
                                 <div>
                                     <a href="{{ route('laporan.index') }}" class="btn btn-secondary">Back</a>
-                                    <a href="{{ route('laporan.edit',$laporan->id) }}" class="btn btn-warning">Selesai</a>
                                 </div>
                             </div>
                         </div>

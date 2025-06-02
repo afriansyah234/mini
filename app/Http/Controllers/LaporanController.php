@@ -74,9 +74,8 @@ class LaporanController extends Controller
      */
     public function show($id)
     {
-        $statuslaporans = StatusLaporan::all();
-        $laporans = Laporan::findOrFail($id);
-        return view('laporan.show', compact('statuslaporan', 'laporans'));
+        $laporan = Laporan::findOrFail($id);
+        return view('laporan.show', compact( 'laporan'));
     }
 
     /**
@@ -84,7 +83,10 @@ class LaporanController extends Controller
      */
     public function edit(Laporan $laporan)
     {
-        //
+        $projects = Project::all();
+        $karyawans = Karyawan::all();
+        $laporan->load('lampiran'); // Memuat lampiran terkait laporan
+        return view('laporan.edit', compact('laporan', 'projects', 'karyawans'));
     }
 
     /**
@@ -92,7 +94,29 @@ class LaporanController extends Controller
      */
     public function update(Request $request, Laporan $laporan)
     {
-        //
+        $validated = $request->validate([
+            'project_id' => 'required|exists:projects,id',
+            'atas_nama' => 'required|exists:karyawans,id',
+            'statuslaporan' => 'required|string',
+            'deskripsi_laporan' => 'nullable|string',
+        ]);
+        $laporan->update($validated);
+        // Proses upload lampiran jika ada
+        if ($request->hasFile('lampiran')) {
+            foreach ($request->file('lampiran') as $file) {
+                $path = $file->store('file_laporan', 'public'); // Simpan di storage/app/public/file_laporan
+
+                // Simpan info file ke tabel lampiran
+                Lampiran::create([
+                    'laporan_id' => $laporan->id,
+                    'nama_file' => $file->getClientOriginalName(),
+                    'path' => $path,
+                    'ukuran' => $file->getSize(),
+                    'jenis' => $file->getClientOriginalExtension()
+                ]);
+            }
+        }
+        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diperbarui!');
     }
 
     /**
@@ -103,14 +127,5 @@ class LaporanController extends Controller
         $laporan = Laporan::findOrFail($id);
         $laporan->delete();
         return redirect()->route('laporan.index')->with('success', 'laporan sudah dihapus');
-    }
-
-    public function selesai(Laporan $laporan)
-    {
-        // Asumsikan kamu punya status dengan id tertentu untuk 'Selesai', misalnya id = 2
-        $laporan->status_laporan_id = 'selesai'; // ganti sesuai ID status 'Selesai' di tabel status_laporans
-        $laporan->save();
-
-        return redirect()->route('laporan.index')->with('success', 'Laporan berhasil diselesaikan.');
     }
 }

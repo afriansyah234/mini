@@ -10,13 +10,13 @@ class StatusLaporan extends Model
     use HasFactory;
 
      protected $fillable = [
-        'status_laporan'
+        'statuslaporan'
     ];
 
-     protected $table = 'status_laporan';
+     protected $table = 'statuslaporan';
 
     public function laporan()
     {
-        return $this->hasMany(Laporan::class, 'status_laporan_id');
+        return $this->hasMany(Laporan::class, 'statuslaporan');
     }
 }

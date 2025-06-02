@@ -33,7 +33,7 @@
                         <div class="col-md-12">
                             <label for="" class="form-label">Pilih Penanggungjawab</label>
                             <select name="karyawan_id" id="karyawan_id" class="form-control" required>
-                                <option disabled value="">-- Pilih Karyawan --</option>
+                                <option disabled selected>-- Pilih Karyawan --</option>
                                 @foreach ($karyawans as $karyawan)
                                     <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan }}</option>
                                 @endforeach
