@@ -39,6 +39,19 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="status_project" class="form-label">Status</label>
+                            <select class="form-select @error('status_project') is-invalid @enderror" id="status_project"
+                                name="status_project" required>
+                                <option value="" disabled selected>Pilih Status</option>
+                                @foreach($statuss as $status)
+                                    <option value="{{ $status->id }}" {{ old('status_project') == $status->id ? 'selected' : '' }}>{{ $status->status_project }}</option>
+                                @endforeach
+                            </select>
+                            @error('status_project')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                     </div>
                     <div class="text-center">

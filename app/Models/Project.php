@@ -25,4 +25,9 @@ class Project extends Model
     {
         return $this->hasMany(Laporan::class, 'project_id');
     }
+
+    public function status()
+    {
+        return $this->belongsTo(StatusProject::class, 'status_project');
+    }
 }

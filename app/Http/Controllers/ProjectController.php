@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\Project;
+use App\Models\StatusProject;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -13,9 +14,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects =Project::all();
-        $karyawans = Karyawan::all();
-        return view('project.index', compact('projects','karyawans'));
+        $projects = Project::with(['status', 'karyawan'])->latest()->get();
+
+        return view('project.index', compact('projects'));
     }
 
     /**
@@ -23,8 +24,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-       $karyawans = Karyawan::all();
-        return view('project.create',compact('karyawans'));
+        $karyawans = Karyawan::all();
+        $statuss = StatusProject::all();
+        return view('project.create', compact('karyawans', 'statuss'));
     }
 
     /**
@@ -33,18 +35,19 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'nama_project' => 'required|string',
+            'deskripsi' => 'required|string',
+            'status_project' => 'required|exists:status_projects,id', // Sesuai nama kolom
+            'karyawan_id' => 'required|exists:karyawans,id'
+        ]);
 
-            'nama_project'=>'required|string',
-            'deskripsi'=>'required|string',
-            'status_project'=>'nullable|in:perencanaan,berjalan,ditunda,selesai',
-            'karyawan_id'=>'required|exists:karyawans,id'
-        ]);
         Project::create([
-            'nama_project'=>$validated['nama_project'],
-            'deskripsi'=>$validated['deskripsi'],
-            'karyawan_id'=>$validated['karyawan_id']
+            'nama_project' => $validated['nama_project'],
+            'deskripsi' => $validated['deskripsi'],
+            'status_project' => $validated['status_project'], // Sesuai nama kolom
+            'karyawan_id' => $validated['karyawan_id'],
         ]);
-        return redirect()->route('project.index')->with('success','Project berhasil dibuat');
+        return redirect()->route('project.index')->with('success', 'Project berhasil dibuat');
     }
 
     /**
@@ -52,8 +55,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-       $project = Project::findOrFail($id);
-       return view('project.show',compact('project'));
+        $project = Project::findOrFail($id);
+        return view('project.show', compact('project'));
     }
 
     /**
@@ -63,7 +66,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $karyawans = Karyawan::all();
-        return view('project.edit',compact('project','karyawans'));
+        return view('project.edit', compact('project', 'karyawans'));
     }
 
     /**
@@ -73,14 +76,14 @@ class ProjectController extends Controller
     {
         $validated = $request->validate([
 
-            'nama_project'=>'required|string',
-            'deskripsi'=>'required|string',
-            'status_project'=>'required|in:perencanaan,berjalan,ditunda,selesai',
-            'karyawan_id'=>'required|exist:karyawans,id'
+            'nama_project' => 'required|string',
+            'deskripsi' => 'required|string',
+            'status_project' => 'required|in:perencanaan,berjalan,ditunda,selesai',
+            'karyawan_id' => 'required|exist:karyawans,id'
         ]);
         $project = Project::findOrFail($id);
         $project->update($validated);
-        return redirect()->route('project.index')->with('success','Project berhasil di perbaharui');
+        return redirect()->route('project.index')->with('success', 'Project berhasil di perbaharui');
     }
 
     /**
@@ -90,6 +93,6 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $project->delete();
-        return redirect()->route('project.index')->with('success','Project ke hapus mas');
+        return redirect()->route('project.index')->with('success', 'Project ke hapus mas');
     }
 }

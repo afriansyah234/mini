@@ -14,4 +14,9 @@ class StatusProject extends Model
     ];
 
     protected $table = 'status_projects';
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'status_project');
+    }
 }

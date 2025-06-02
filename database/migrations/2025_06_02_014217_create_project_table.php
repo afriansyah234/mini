@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('nama_project');
             $table->string('deskripsi');
-            $table->foreignId('status_project_id')->constrained('status_projects');
+            $table->foreignId('status_project')->constrained('status_projects');
             $table->foreignId('karyawan_id')->constrained();
             $table->timestamps();
         });
