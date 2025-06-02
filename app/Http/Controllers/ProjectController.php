@@ -90,7 +90,7 @@ class ProjectController extends Controller
         ]);
 
         return redirect()->route('project.index')
-            ->with('success', 'Project updated successfully.');
+            ->with('success', 'Project update berhasil.');
     }
 
     /**
@@ -100,6 +100,6 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $project->delete();
-        return redirect()->route('project.index')->with('success', 'Project ke hapus mas');
+        return redirect()->route('project.index')->with('success', 'Project terhapus');
     }
 }

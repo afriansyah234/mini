@@ -4,31 +4,14 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
-
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Terjadi kesalahan:</strong>
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                
                 <h1>Manajemen laporan</h1>
                 <a href="{{ route('laporan.create') }}" class="btn btn-secondary">
                     <i class="fas fa-plus me-2"></i>Buat Laporan Baru
                 </a>
 
 
-                <!-- Task Table -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
+                <table class="table table-bordered shadow mt-4">
                                 <!-- Table Headers -->
                                 <thead>
                                     <tr>
@@ -99,12 +82,6 @@
                                     @endif
                                 </tbody>
                             </table>
-                        </div>
-
-                        <!-- Pagination -->
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>

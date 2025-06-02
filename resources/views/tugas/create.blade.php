@@ -22,9 +22,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('project_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    <div class="invalid-feedback">Pilih Project</div>
                             </div>
 
                             <div class="mb-3">
@@ -40,9 +38,9 @@
                                 <label for="deskripsi" class="form-label">Deskripsi</label>
                                 <textarea class="form-control @error('deskripsi') is-invalid @enderror" 
                                           id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
-                                @error('deskripsi')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    <div class="invalid-feedback">
+                                        Masukkan deskripsi tugas
+                                    </div>
                             </div>
 
                             <div class="mb-3">
@@ -55,9 +53,9 @@
                                     <option value="krisis" {{ old('prioritas') == 'krisis' ? 'selected' : '' }}>krisis</option>
 
                                 </select>
-                                @error('prioritas')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    <div class="invalid-feedback">
+                                        Pilih prioritas tugas
+                                    </div>
                             </div>
 
                             <div class="mb-3">
@@ -70,9 +68,9 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('status_tugas_id')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                                    <div class="invalid-feedback">
+                                        Pilih status tugas
+                                    </div>
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -84,6 +82,25 @@
                                 </button>
                             </div>
                         </form>
+                         <script>
+                                            (() => {
+                                            'use strict'
+
+                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                            const forms = document.querySelectorAll('.needs-validation')
+
+                                            // Loop over them and prevent submission
+                                            Array.from(forms).forEach(form => {
+                                            form.addEventListener('submit', event => {
+                                            if (!form.checkValidity()) {
+                                            event.preventDefault()
+                                        event.stopPropagation()
+                                        }
+                                     form.classList.add('was-validated')
+                               }, false)
+                              })
+                            })()
+                        </script>
                     </div>
                 </div>
             </div>

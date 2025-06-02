@@ -9,13 +9,13 @@
                     <h3 class="mb-0">Buat Laporan Baru</h3>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body needs-validation">
                     <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <!-- Nama Project -->
-                        <div class="mb-3">
-                            <label for="project_id" class="form-label">Nama Project <span class="text-danger">*</span></label>
+                        <div class="mb-3 col-md-12">
+                            <label for="project_id" class="form-label">Pilih Project <span class="text-danger">*</span></label>
                             <select name="project_id" id="project_id" class="form-select" required>
                                 <option disabled selected>-- Pilih Project --</option>
                                 @foreach ($projects as $project)
@@ -24,14 +24,14 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('project_id')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
+                            <div class="invalid-feedback">
+                                Pilih nama project
+                            </div>
                         </div>
 
                         <!-- Atas Nama -->
                         <div class="mb-3">
-                            <label for="atas_nama" class="form-label">Atas Nama <span class="text-danger">*</span></label>
+                            <label for="atas_nama" class="form-label">Penanggung Jawab <span class="text-danger">*</span></label>
                             <select name="atas_nama" id="atas_nama" class="form-select" required>
                                 <option disabled selected>-- Pilih Karyawan --</option>
                                 @foreach ($karyawans as $karyawan)
@@ -40,18 +40,18 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('atas_nama')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
+                            <div class="invalid-feedback">
+                                Pilih penanggung jawab laporan
+                            </div>
                         </div>
 
                         <!-- Deskripsi -->
                         <div class="mb-3">
                             <label for="deskripsi_laporan" class="form-label">Deskripsi Laporan</label>
                             <textarea name="deskripsi_laporan" id="deskripsi_laporan" class="form-control" rows="4">{{ old('deskripsi_laporan') }}</textarea>
-                            @error('deskripsi_laporan')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
+                           <div class="invalid-feedback">
+                            Masukkan deskripsi laporan
+                           </div>
                         </div>
 
                         <!-- Upload Lampiran -->
@@ -66,9 +66,9 @@
                                 accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx"
                             >
                             <small class="text-muted">Format: PDF, JPG, PNG, DOC, XLS (Maks. 5MB/file)</small>
-                            @error('lampiran.*')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
+                            <div class="invalid-feedback">
+                                Pilih file lampiran (maks. 5MB/file)
+                            </div>
                         </div>
                         <div>
                         <input type="hidden" name="tanggal_laporan" value="{{ \Carbon\Carbon::now()->toDateString() }}">
@@ -85,6 +85,25 @@
                             </button>
                         </div>
                     </form>
+                     <script>
+                                            (() => {
+                                            'use strict'
+
+                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                            const forms = document.querySelectorAll('.needs-validation')
+
+                                            // Loop over them and prevent submission
+                                            Array.from(forms).forEach(form => {
+                                            form.addEventListener('submit', event => {
+                                            if (!form.checkValidity()) {
+                                            event.preventDefault()
+                                        event.stopPropagation()
+                                        }
+                                     form.classList.add('was-validated')
+                               }, false)
+                              })
+                            })()
+                        </script>
                 </div>
             </div>
         </div>
