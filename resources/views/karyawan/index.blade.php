@@ -2,8 +2,9 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                   <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="col-md-12"
+            >@if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
 @if ($errors->any())

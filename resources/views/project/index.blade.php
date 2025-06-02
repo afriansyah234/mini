@@ -3,7 +3,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                   <div class="alert alert-success">{{ session('success') }}</div>
+                @if (session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
 @if ($errors->any())
