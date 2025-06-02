@@ -65,7 +65,7 @@
                             <select class="form-select @error('statuslaporan') is-invalid @enderror" id="statuslaporan" name="statuslaporan" required>
                                 <option disabled selected>-- Pilih Status --</option>
                                 @foreach($statuses as $status)
-                                    <option value="{{ $status }}" {{ old('statuslaporan', $laporan->statuslaporan) == $status ? 'selected' : '' }}>
+                                    <option value="{{ $status->id }}" {{ old('statuslaporan', $laporan->statuslaporan) == $status->id ? 'selected' : '' }}>
                                         {{ ucfirst($status) }}
                                     </option>
                                 @endforeach
