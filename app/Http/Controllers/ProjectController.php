@@ -102,4 +102,26 @@ class ProjectController extends Controller
         $project->delete();
         return redirect()->route('project.index')->with('success', 'Project terhapus');
     }
+
+    public function kanban()
+    {
+        $statuses = StatusProject::all();
+        $projects = Project::with(['karyawan', 'status'])->get();
+
+        $statusColors = [
+            'perencanaan' => 'info',
+            'berjalan' => 'warning',
+            'ditunda' => 'secondary',
+            'selesai' => 'success'
+        ];
+
+        return view('project.kanban', compact('statuses', 'projects', 'statusColors'));
+    }
+
+    // Update Project Status (Simple Form Submit)
+    public function updateStatus(Request $request, Project $project)
+    {
+        $project->update(['status_project' => $request->status_id]);
+        return back()->with('success', 'Status updated!');
+    }
 }
