@@ -21,4 +21,3 @@
     </div>
 </div>
 @endsection
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit, cupiditate ut totam quaerat fugit vitae ratione delectus aut, quibusdam laboriosam dolores autem explicabo quae architecto eveniet molestiae cum! Fugiat officiis exercitationem tenetur tempora tempore.

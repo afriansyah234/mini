@@ -12,10 +12,7 @@
         @endif
         <div class="card">
             <div class="col-md-12">
-                <div class="ms-4 mt-4">
-                    <a href="{{ route('project.index') }}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i>
-                        Kembali</a>
-                </div>
+                
                 <h2 class="text-center">Tambahkan project</h2>
                 <form action="{{ route('project.store') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
@@ -40,14 +37,6 @@
                                 Pilih penanggungjawab project
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <label for="" class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control" rows="5" required
-                                placeholder="Masukkan deskripsi project"></textarea>
-                                <div class="invalid-feedback">
-                                    Masukkan deskripsi project
-                                </div>
-                        </div>
                         <div class="mb-3">
                             <label for="status_project" class="form-label">Status</label>
                             <select class="form-select @error('status_project') is-invalid @enderror" id="status_project"
@@ -63,13 +52,28 @@
                             <div class="invalid-feedback">
                                 Pilih status project
                             </div>
-
                         </div>
+                        <div class="col-md-12">
+                            <label for="" class="form-label">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" rows="5" required
+                                placeholder="Masukkan deskripsi project"></textarea>
+                                <div class="invalid-feedback">
+                                    Masukkan deskripsi project
+                                </div>
+                        </div>
+                        
 
                     </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-secondary">Simpan project</button>
-                    </div>
+                    <div class="mt-4 d-flex justify-content-between align-items-center">
+                    <button href="{{ route('project.index') }}" class="btn btn-primary">
+                        <i class="bi bi-arrow-left"></i>
+                        </button>
+                        <div class="mx-auto">
+                            <button type="submit" class="btn btn-primary" class="text-center">
+                            <i class="fas fa-save me-1"></i>
+                        </button>
+                        </div>
+                </div>
                 </form>
             </div>
         </div>

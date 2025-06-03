@@ -24,6 +24,10 @@
                 <a class="btn btn-success" href="{{ route('project.create') }}">
                     <i class="bi bi-plus-circle me-2"></i>Tambah project
                 </a>
+                 <!-- <a class="btn btn-success" href="{{ route('project.create') }}">
+                    <i class="bi bi-card-list me-2"></i></i>Cek Project
+                </a> -->
+                
             </div>
 
             @if ($projects->isEmpty())
@@ -35,12 +39,24 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100 shadow-lg">
                             <div class="card-header">
-                                <h5 class="card-title"><strong>{{ $project->nama_project }}</strong> </h5>
-
+                                <h5 class="card-title"><strong>{{ $project->nama_project }}</strong>
+                            <div class="mt-auto d-flex justify-content-end">
+                                    <a class="btn btn-info text-white" href="{{ route('project.show', $project->id) }}">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <form action="{{ route('project.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus project ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div></h5>
+                                    
                             </div>
                             <div class="card-body d-flex flex-column">
                                 <p class="card-text"><strong>Deskripsi :</strong> {{ $project->deskripsi }}</p>
-                                <p><strong>Status :</strong> 
+                                <p><strong>Status : </strong> 
                                     @php
                                         $badge = [
                                             'perencanaan' => 'bg-secondary',
@@ -52,18 +68,7 @@
                                     <span class="badge {{ $badge }}">{{ ucfirst($project->status->status_project) }}</span>
                                 </p>
                                 <p><strong>Penanggung jawab:</strong> {{ $project->karyawan->nama_karyawan ?? '-' }}</p>
-                                <div class="mt-auto d-flex justify-content-between">
-                                    <a class="btn btn-info text-white" href="{{ route('project.show', $project->id) }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('project.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus project ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
