@@ -2,8 +2,8 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12"
-            >@if (session('success'))
+            <div class="col-md-12">
+            @if (session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 
@@ -40,13 +40,13 @@
                                                 <td>{{ $karyawan->departemen }}</td>
                                                 <td>
                                                 <a href="{{ route('karyawan.edit', $karyawan->id)}}"
-                                                 class="btn btn-warning btn-sm"><i class="fas fa-edit"></i>edit</a>
+                                                 class="btn bg-warning text-white btn-sm"><i class="fas fa-edit"></i></a>
                                               <form action="{{ route('karyawan.destroy', $karyawan->id) }}"
                                                         method="POST" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                     class="fas fa-trash"></i>hapus</button>
+                                                        <button type="submit" class="btn bg-danger text-white btn-sm"><i
+                                                     class="fas fa-trash"></i></button>
                                               </form>
                                             </td>
                                         </tr>

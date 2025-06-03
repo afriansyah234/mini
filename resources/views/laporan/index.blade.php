@@ -56,20 +56,20 @@
                                          @endif
                                     </td>
                                                 <td>
-                                                    <a href="{{ route('laporan.show', $laporan->id) }}" class="btn btn-info btn-sm">
-                                                        <i class="fas fa-eye"></i> Lihat
+                                                    <a href="{{ route('laporan.show', $laporan->id) }}" class="btn bg-info btn-sm text-white">
+                                                        <i class="fas fa-eye"></i> 
                                                     </a>
                                                     <a href="{{ route('laporan.edit', $laporan->id) }}"
-                                                        class="btn btn-warning btn-sm">
-                                                        <i class="fas fa-edit"></i> Edit
+                                                        class="btn bg-warning btn-sm text-white">
+                                                        <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form action="{{ route('laporan.destroy', $laporan->id) }}" method="POST"
                                                         class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                        <button type="submit" class="btn bg-danger btn-sm text-white"
                                                             onclick="return confirm('Apakah Anda yakin ingin menghapus laporan ini?')">
-                                                            <i class="fas fa-trash"></i> Hapus
+                                                            <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
                                                 </td>

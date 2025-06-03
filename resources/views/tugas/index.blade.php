@@ -96,7 +96,7 @@
                                             <td class="text-center">
                                                 <div class="d-flex justify-content-center gap-2">
                                                     <a href="{{ route('tugas.edit', $tugas->id) }}"
-                                                        class="btn btn-sm btn-warning" title="Edit">
+                                                        class="btn btn-sm btn-warning text-white" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form action="{{ route('tugas.destroy', $tugas->id) }}" method="POST">

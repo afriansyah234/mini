@@ -48,7 +48,7 @@
                                     Masukkan deskripsi project
                                 </div>
                         </div>
-                        <div class="mb-3 col-md-6">
+                        <div class="mb-3">
                             <label for="status_project" class="form-label">Status</label>
                             <select class="form-select @error('status_project') is-invalid @enderror" id="status_project"
                                 name="status_project" required>

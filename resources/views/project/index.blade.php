@@ -52,11 +52,13 @@
                                 </td>
                                 <td>{{ $project->karyawan->nama_karyawan ?? '-'}}</td>
                                 <td class="d-flex justify-content-center">
-                                    <a class="btn btn-warning me-2" href="{{ route('project.show', $project->id) }}">detail</a>
+                                    <a class="btn btn-info me-2 text-white" href="{{ route('project.show', $project->id) }}"><i class="fas fa-eye"></i> </a>
                                     <form action="{{ route('project.destroy', $project->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger">Hapus</button>
+                                        <button class="btn btn-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </form>
 
                                 </td>
