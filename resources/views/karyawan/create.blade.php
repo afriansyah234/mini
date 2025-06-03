@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+      @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card">
@@ -43,25 +52,28 @@
                             </div>
                         </div>
                     </form>
-
-                    <script>
-                        (() => {
-                            'use strict';
-                            const forms = document.querySelectorAll('.needs-validation');
-                            Array.from(forms).forEach(form => {
-                                form.addEventListener('submit', event => {
-                                    if (!form.checkValidity()) {
-                                        event.preventDefault();
-                                        event.stopPropagation();
-                                    }
-                                    form.classList.add('was-validated');
-                                }, false);
-                            });
-                        })();
-                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+      (() => {
+         'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              const forms = document.querySelectorAll('.needs-validation')
+                 // Loop over them and prevent submission
+                     Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+              event.preventDefault()
+             event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+            }, false)
+            })
+        })()
+    </script>
 @endsection

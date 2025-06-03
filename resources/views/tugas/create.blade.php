@@ -9,12 +9,12 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('tugas.store') }}" method="POST">
+                        <form action="{{ route('tugas.store') }}" method="POST" class="needs-validation" novalidate>
                             @csrf
 
                             <div class="mb-3">
                                 <label for="project_id" class="form-label">Project</label>
-                                <select class="form-select @error('project_id') is-invalid @enderror" id="project_id" name="project_id" required>
+                                <select class="form-select" id="project_id" name="project_id" required>
                                     <option value="" selected disabled>Pilih Project</option>
                                     @foreach($projects as $project)
                                         <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
@@ -29,9 +29,11 @@
                                 <label for="judul_tugas" class="form-label">Judul Tugas</label>
                                 <input type="text" class="form-control @error('judul_tugas') is-invalid @enderror" 
                                        id="judul_tugas" name="judul_tugas" value="{{ old('judul_tugas') }}" required>
-                                @error('judul_tugas')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
+                               
+                                    <div class="invalid-feedback">
+                                        Masukkan judul tugas
+                                    </div>
+                                
                             </div>
 
                             <div class="mb-3">
@@ -82,28 +84,29 @@
                                 </button>
                             </div>
                         </form>
-                         <script>
-                                            (() => {
-                                            'use strict'
-
-                                            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                                            const forms = document.querySelectorAll('.needs-validation')
-
-                                            // Loop over them and prevent submission
-                                            Array.from(forms).forEach(form => {
-                                            form.addEventListener('submit', event => {
-                                            if (!form.checkValidity()) {
-                                            event.preventDefault()
-                                        event.stopPropagation()
-                                        }
-                                     form.classList.add('was-validated')
-                               }, false)
-                              })
-                            })()
-                        </script>
+                       
                     </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+      (() => {
+         'use strict'
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+              const forms = document.querySelectorAll('.needs-validation')
+                 // Loop over them and prevent submission
+                     Array.from(forms).forEach(form => {
+                    form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+              event.preventDefault()
+             event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+            }, false)
+            })
+        })()
+    </script>
 @endsection
