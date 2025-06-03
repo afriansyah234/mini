@@ -39,19 +39,22 @@
                     <div class="col-md-4 mb-4">
                         <div class="card h-100 shadow-lg">
                             <div class="card-header">
-                                <h5 class="card-title"><strong>{{ $project->nama_project }}</strong>
-                            <div class="mt-auto d-flex justify-content-end">
-                                    <a class="btn btn-info text-white" href="{{ route('project.show', $project->id) }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <form action="{{ route('project.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus project ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div></h5>
+                               <div class="card-header d-flex justify-content-between align-items-center py-2">
+    <h6 class="mb-0 fw-semibold">{{ $project->nama_project }}</h6>
+    <div class="d-flex gap-1">
+        <a class="btn btn-info btn-sm text-white" href="{{ route('project.show', $project->id) }}">
+            <i class="fas fa-eye fa-sm"></i>
+        </a>
+        <form action="{{ route('project.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus project ini?')">
+            @csrf
+            @method('DELETE')
+            <button class="btn btn-danger btn-sm">
+                <i class="fas fa-trash fa-sm"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
                                     
                             </div>
                             <div class="card-body d-flex flex-column">

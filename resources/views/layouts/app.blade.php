@@ -45,16 +45,16 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('karyawan.index') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('karyawan.index','karyawan.create','karyawan.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('project.index') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('project.index','project.show','project.create','project.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('project.index') }}">Manajemen Project</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('laporan.index') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('laporan.index','laporan.show','laporan.create','laporan.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('laporan.index') }}">Laporan</a>
                         </li>
                     </ul>

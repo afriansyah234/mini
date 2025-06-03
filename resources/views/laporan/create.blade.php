@@ -9,7 +9,7 @@
                     <h3 class="mb-0">Buat Laporan Baru</h3>
                 </div>
 
-                <div class="card-body needs-validation">
+                <div class="card-body needs-validation shadow-lg">
                     <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
                         @csrf
 

@@ -10,13 +10,13 @@
                 </ul>
             </div>
         @endif
-        <div class="card">
+        <div class="card shadow-lg">
             <div class="col-md-12">
                 
                 <h2 class="text-center">Tambahkan project</h2>
                 <form action="{{ route('project.store') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
-                    <div class="row g-3 need-validation">
+                    <div class="row g-3 need-validation ms-3 mx-3">
                         <div class="col-md-6">
                             <label for="" class="form-label">Nama Project</label>
                             <input type="text" name="nama_project" min="1" class="form-control"
@@ -64,7 +64,7 @@
                         
 
                     </div>
-                    <div class="mt-4 d-flex justify-content-between align-items-center">
+                    <div class="mt-3 md-3 mb-3 ms-4 d-flex justify-content-between align-items-center">
                     <button href="{{ route('project.index') }}" class="btn btn-primary">
                         <i class="bi bi-arrow-left"></i>
                         </button>

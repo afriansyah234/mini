@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body shadow-lg">
                     <form action="{{ route('karyawan.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
                         <div class="row g-3">
