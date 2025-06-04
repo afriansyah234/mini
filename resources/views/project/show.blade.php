@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body shadow-lg">
                         <h2>Detail Project</h2>
                         <p>Nama Project : {{ $project->nama_project }}</p>
                         <p>Deskripsi : {{ $project->deskripsi }}</p>
