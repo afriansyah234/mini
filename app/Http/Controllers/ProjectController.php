@@ -15,7 +15,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['status', 'karyawan'])->latest()->get();
-
+         
         return view('project.index', compact('projects'));
     }
 
@@ -107,6 +107,9 @@ class ProjectController extends Controller
     {
         $statuses = StatusProject::all();
         $projects = Project::with(['karyawan', 'status'])->get();
+        $lockPerencanaan = $projects->contains(function ($project) {
+        return $project->status->status_project !== 'perencanaan';
+    });
 
         $statusColors = [
             'perencanaan' => 'info',
@@ -115,7 +118,7 @@ class ProjectController extends Controller
             'selesai' => 'success'
         ];
 
-        return view('project.kanban', compact('statuses', 'projects', 'statusColors'));
+        return view('project.kanban', compact('statuses', 'projects', 'statusColors', 'lockPerencanaan'));
     }
 
     // Update Project Status (Simple Form Submit)

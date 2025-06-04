@@ -43,7 +43,10 @@
                                 name="status_project" required>
                                 <option value="" disabled selected>Pilih Status</option>
                                 @foreach($statuss as $status)
-                                    <option value="{{ $status->id }}" {{ old('status_project') == $status->id ? 'selected' : '' }}>{{ $status->status_project }}</option>
+                                @if ($status->status_project == 'perencanaan')
+                                <option value="{{ $status->id }}" {{ old('status_project') == $status->id ? 'selected' : '' }}>{{ $status->status_project }}</option>
+                                @endif
+                                    
                                 @endforeach
                             </select>
                             @error('status_project')

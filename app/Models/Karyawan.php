@@ -11,7 +11,7 @@ class Karyawan extends Model
     protected $fillable = [
         'nama_karyawan',
         'email',
-        'departemen',
+        'departemen_id',
     ];
 
     protected $table = 'karyawans';
@@ -23,6 +23,10 @@ class Karyawan extends Model
     public function laporan()
     {
         return $this->hasMany(Laporan::class, 'atas_nama');
+    }
+    public function departemen()
+    {
+        return $this->belongsTo(Departemen::class);
     }
 
 }

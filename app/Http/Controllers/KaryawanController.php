@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departemen;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 
@@ -10,10 +11,19 @@ class KaryawanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $karyawans = Karyawan::all();
-        return view('karyawan.index', compact('karyawans'));
+        $departemen = Departemen::all();
+            $search = $request->input('search');
+                $karyawans = Karyawan::query()
+                    ->when($search, function($query, $search) {
+                        return $query->where('nama_karyawan', 'like', "%{$search}%")
+                                    ->orWhere('email', 'like', "%{$search}%")
+                                    ->orWhere('departemen', 'like', "%{$search}%");
+                    })
+                    ->get();
+        return view('karyawan.index', compact('karyawans','departemen'));
     }
 
     /**
@@ -33,9 +43,17 @@ class KaryawanController extends Controller
         $validasi = $request->validate([
             'nama_karyawan' => 'required',
             'email' => 'required|email|unique:karyawans,email',
-            'departemen' => 'required'
+            'departemen' => 'required|string'
         ]);
-        Karyawan::create($validasi);
+       $departemen =  Departemen::firstOrCreate([
+            'nama_departemen' => $request->departemen
+        ]);
+        Karyawan::create([
+            'nama_karyawan' => $validasi['nama_karyawan'],
+            'email' => $validasi['email'],
+            'departemen_id' => $departemen->id // Asumsi ada relasi ke tabel departemen
+        ]);
+        
         return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil ditambahkan');
     }
 

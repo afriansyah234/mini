@@ -13,6 +13,9 @@
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card">
+                <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah karyawan Baru</h4>
+                    </div>
                 <div class="card-body shadow-lg">
                     <form action="{{ route('karyawan.store') }}" method="POST" class="needs-validation" novalidate>
                         @csrf
@@ -45,9 +48,12 @@
                             </div>
 
                             <!-- Tombol Submit -->
-                            <div class="col-12 mt-4">
-                                <button type="submit" name="Submit" value="simpan" class="btn btn-primary">
-                                    <i class="fas fa-save me-1"></i> Simpan Data
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{{ route('tugas.index') }}" class="btn btn-secondary me-md-2">
+                                    <i class="fas fa-arrow-left me-1"></i> Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Simpan
                                 </button>
                             </div>
                         </div>
