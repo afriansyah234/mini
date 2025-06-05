@@ -33,7 +33,7 @@
 
                 @foreach($project->tugas as $tugas)
                     <div class="col-md-4 mb-4">
-                        <div class="card h-90 shadow-lg">
+                        <div class="card h-90 shadow-lg" style="min-height: 200px; border: 2px dashed #ccc; background-color: #f8f9fa;">
                             <div class="card-header">
                                 <div class="d-flex justify-content-between align-items-start">
                                     <h5 class="card-title">{{ $tugas->judul_tugas }}</h5>
@@ -89,6 +89,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         @endif
 @endsection

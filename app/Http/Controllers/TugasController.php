@@ -53,9 +53,9 @@ class TugasController extends Controller
      */
     public function create()
     {
-        $projects = Project::all();
+        $project = Project::findOrFail(request()->project_id);
         $statuses = Status_tugas::all();
-        return view('tugas.create', compact('projects', 'statuses'));
+        return view('tugas.create', compact('project', 'statuses'));
     }
 
     /**
@@ -69,7 +69,7 @@ class TugasController extends Controller
             'deskripsi' => 'nullable|string',
             'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
             'status_tugas_id' => 'required|exists:status_tugas,id',
-            'deadline' => 'required|date'
+            'deadline' => 'required|date|after:today'
         ]);
 
         $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);

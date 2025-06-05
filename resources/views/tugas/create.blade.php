@@ -16,16 +16,9 @@
                             @csrf
 
                             <div class="mb-3">
-                                <label for="project_id" class="form-label">Project</label>
-                                <select class="form-select" id="project_id" name="project_id" required>
-                                    <option value="" selected disabled>Pilih Project</option>
-                                    @foreach($projects as $project)
-                                        <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
-                                            {{ $project->nama_project }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                    <div class="invalid-feedback">Pilih Project</div>
+                                <input type="hidden" name="project_id" id="value" value="{{ $project->id }}">
+                                <label for="nama_project" class="form-label">Project</label>
+                                <input type="text" name="nama_project" id="" value="{{ $project->nama_project }}" class="form-control" readonly>
                             </div>
 
                             <div class="mb-3">
@@ -77,9 +70,12 @@
                                         Pilih status tugas
                                     </div>
                             </div>
+                            @php
+                            $besok = \Carbon\Carbon::tomorrow()->format('Y-m-d');
+                            @endphp
                              <div class="mb-3">
                                 <label>Deadline</label>
-                                <input type="date" name="deadline" class="form-control" required>
+                                <input type="date" name="deadline" class="form-control" required min="{{ $besok }}">
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
