@@ -15,7 +15,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::with(['status', 'karyawan'])->latest()->get();
-         
+
         return view('project.index', compact('projects'));
     }
 
@@ -55,7 +55,7 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::with('tugas')->findOrFail($id);
         return view('project.show', compact('project'));
     }
 
@@ -108,8 +108,8 @@ class ProjectController extends Controller
         $statuses = StatusProject::all();
         $projects = Project::with(['karyawan', 'status'])->get();
         $lockPerencanaan = $projects->contains(function ($project) {
-        return $project->status->status_project !== 'perencanaan';
-    });
+            return $project->status->status_project !== 'perencanaan';
+        });
 
         $statusColors = [
             'perencanaan' => 'info',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Tugas;
 use App\Models\Project;
+use App\Models\Deadline;
 use App\Models\Status_tugas;
 use Illuminate\Http\Request;
 
@@ -67,12 +68,22 @@ class TugasController extends Controller
             'judul_tugas' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
-            'status_tugas_id' => 'required|exists:status_tugas,id'
+            'status_tugas_id' => 'required|exists:status_tugas,id',
+            'deadline' => 'required|date'
         ]);
 
-        Tugas::create($validated);
+        $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
 
-        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil ditambahkan');
+        Tugas::create([
+            'project_id' => $validated['project_id'],
+            'judul_tugas' => $validated['judul_tugas'],
+            'deskripsi' => $validated['deskripsi'],
+            'prioritas' => $validated['prioritas'],
+            'status_tugas_id' => $validated['status_tugas_id'],
+            'deadline_id' => $deadline->id
+        ]);
+
+        return redirect()->route('project.index')->with('success', 'Tugas berhasil ditambahkan');
     }
 
     /**

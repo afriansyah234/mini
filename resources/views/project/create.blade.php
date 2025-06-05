@@ -12,7 +12,7 @@
         @endif
         <div class="card shadow-lg">
             <div class="col-md-12">
-                
+
                 <h2 class="text-center">Tambahkan project</h2>
                 <form action="{{ route('project.store') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
@@ -23,7 +23,7 @@
                                 placeholder="Masukkan nama Project" required>
                             <div class="invalid-feedback">
                                 Pilih nama project
-                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <label for="" class="form-label">Pilih Penanggungjawab</label>
@@ -43,10 +43,9 @@
                                 name="status_project" required>
                                 <option value="" disabled selected>Pilih Status</option>
                                 @foreach($statuss as $status)
-                                @if ($status->status_project == 'perencanaan')
-                                <option value="{{ $status->id }}" {{ old('status_project') == $status->id ? 'selected' : '' }}>{{ $status->status_project }}</option>
-                                @endif
-                                    
+                                    <option value="{{ $status->id }}" {{ old('status_project') == $status->id ? 'selected' : '' }}>{{ $status->status_project }}</option>
+
+
                                 @endforeach
                             </select>
                             @error('status_project')
@@ -60,23 +59,23 @@
                             <label for="" class="form-label">Deskripsi</label>
                             <textarea name="deskripsi" class="form-control" rows="5" required
                                 placeholder="Masukkan deskripsi project"></textarea>
-                                <div class="invalid-feedback">
-                                    Masukkan deskripsi project
-                                </div>
+                            <div class="invalid-feedback">
+                                Masukkan deskripsi project
+                            </div>
                         </div>
-                        
+
 
                     </div>
                     <div class="mt-3 md-3 mb-3 ms-4 d-flex justify-content-between align-items-center">
-                    <button href="{{ route('project.index') }}" class="btn btn-primary">
-                        <i class="bi bi-arrow-left"></i>
+                        <button href="{{ route('project.index') }}" class="btn btn-primary">
+                            <i class="bi bi-arrow-left"></i>
                         </button>
                         <div class="mx-auto">
                             <button type="submit" class="btn btn-primary" class="text-center">
-                            <i class="fas fa-save me-1"></i>
-                        </button>
+                                <i class="fas fa-save me-1"></i>
+                            </button>
                         </div>
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -84,19 +83,19 @@
 @endsection
 @section('scripts')
     <script>
-      (() => {
-         'use strict'
+        (() => {
+            'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              const forms = document.querySelectorAll('.needs-validation')
-                 // Loop over them and prevent submission
-                     Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-              event.preventDefault()
-             event.stopPropagation()
-            }
-            form.classList.add('was-validated')
-            }, false)
+            const forms = document.querySelectorAll('.needs-validation')
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
             })
         })()
     </script>

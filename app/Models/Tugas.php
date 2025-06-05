@@ -15,6 +15,7 @@ class Tugas extends Model
         "deskripsi",
         "prioritas",
         "status_tugas_id",
+        'deadline_id'
     ];
 
     public function status()
@@ -27,5 +28,8 @@ class Tugas extends Model
         return $this->belongsTo(Project::class);
     }
 
-
+    public function deadline()
+    {
+        return $this->belongsTo(Deadline::class);
+    }
 }

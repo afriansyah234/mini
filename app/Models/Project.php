@@ -30,4 +30,9 @@ class Project extends Model
     {
         return $this->belongsTo(StatusProject::class, 'status_project');
     }
+
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
 }

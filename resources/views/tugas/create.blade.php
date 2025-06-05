@@ -1,6 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
+        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow">
@@ -73,6 +76,10 @@
                                     <div class="invalid-feedback">
                                         Pilih status tugas
                                     </div>
+                            </div>
+                             <div class="mb-3">
+                                <label>Deadline</label>
+                                <input type="date" name="deadline" class="form-control" required>
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

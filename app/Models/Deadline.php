@@ -10,14 +10,17 @@ class Deadline extends Model
     use HasFactory;
 
     protected $fillable = [
-        "tugas_id",
         "tanggal",
     ];
 
     protected $table = "deadlines";
 
+    protected $casts = [
+        'tanggal' => 'date'
+    ];
+
     public function tugas()
     {
-        return $this->belongsTo(Tugas::class);
+        return $this->hasOne(Tugas::class);
     }
 }

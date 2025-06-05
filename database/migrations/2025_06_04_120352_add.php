@@ -10,10 +10,8 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('deadlines', function (Blueprint $table) {
-            $table->id();
-            $table->date('tanggal');
-            $table->timestamps();
+        Schema::table('tugas', function (Blueprint $table) {
+            $table->foreignId('deadline_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -22,6 +20,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('deadlines');
+        Schema::table('tugas', function (Blueprint $table) {
+            //
+        });
     }
 };
