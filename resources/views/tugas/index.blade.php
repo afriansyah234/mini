@@ -120,6 +120,7 @@
                         </div>
                     </div>
                 </div>
+                
 
                 <!-- Pagination -->
                 @if($tugass->hasPages())

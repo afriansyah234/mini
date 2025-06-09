@@ -25,7 +25,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('karyawan', KaryawanController::class);
-    Route::resource('tugas', TugasController::class);
+    Route::resource('tugas', TugasController::class)->parameters([
+        'tugas' => 'tugas'
+    ]);
     Route::resource('project', ProjectController::class);
     Route::resource('laporan', LaporanController::class);
     Route::get('/kanban', [ProjectController::class, 'kanban'])->name('project.kanban');

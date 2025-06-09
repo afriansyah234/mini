@@ -91,7 +91,6 @@ class TugasController extends Controller
      */
     public function show(Tugas $tugas)
     {
-        $tugas = Tugas::all();
         return view('tugas.index', compact('tugas'))
         ;
     }
@@ -101,7 +100,10 @@ class TugasController extends Controller
      */
     public function edit(Tugas $tugas)
     {
-        //
+        $project = $tugas->project;
+        $statuses = Status_tugas::all();
+        $deadline = $tugas->deadline ? $tugas->deadline->tanggal->format('Y-m-d') : null;
+        return view('tugas.edit', compact('tugas','project', 'statuses', 'deadline'));
     }
 
     /**
@@ -109,7 +111,25 @@ class TugasController extends Controller
      */
     public function update(Request $request, Tugas $tugas)
     {
-        //
+        $validated = $request->validate([
+            'judul_tugas' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
+            'status_tugas_id' => 'required|exists:status_tugas,id',
+            'deadline' => 'required|date|after:today'
+        ]);
+
+        $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
+
+        $tugas->update([
+            'judul_tugas' => $validated['judul_tugas'],
+            'deskripsi' => $validated['deskripsi'],
+            'prioritas' => $validated['prioritas'],
+            'status_tugas_id' => $validated['status_tugas_id'],
+            'deadline_id' => $deadline->id
+        ]);
+
+        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil diperbarui');
     }
 
     /**
@@ -117,6 +137,12 @@ class TugasController extends Controller
      */
     public function destroy(Tugas $tugas)
     {
-        //
+         $deadline = $tugas->deadline;
+        $tugas->delete();
+    if ($deadline && $deadline->tugas()->count() === 0) {
+        $deadline->delete();
     }
+        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil dihapus');
+    }
+   
 }
