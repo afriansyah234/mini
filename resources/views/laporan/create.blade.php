@@ -24,7 +24,7 @@
                             class="needs-validation" novalidate>
                             @csrf
                             <div class="mb-3 col-md-12">
-                                <label for="project_id" class="form-label">Pilih Project</label>
+                                <label for="project_id" class="form-label">Nama Project</label>
                               <input type="hidden" name="project_id" class="form-control"  value="{{ $project->id }}">
                               <input type="text"  class="form-control" value="{{ $project->nama_project }}" readonly>
                                 <div class="invalid-feedback">
