@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <h2 class="text-center mb-4">Manajemen Project</h2>
+            <h2 class="mb-3 text-center">Manajemen Project</h2>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <div class="mb-4 text-center">
+            <div class="mb-3">
                 <a class="btn btn-success" href="{{ route('project.create') }}">
                     <i class="bi bi-plus-circle me-2"></i>Tambah project
                 </a>

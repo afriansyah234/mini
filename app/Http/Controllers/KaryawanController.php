@@ -98,7 +98,10 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         try {
-            Karyawan::findOrFail($id)->delete();
+            $karyawan = Karyawan::findOrFail($id)->delete();
+            if ($karyawan->projects()->exists() || $karyawan->tugas()->exists()) {
+            return redirect()->back()->with('error', 'Karyawan masih digunakan di tabel lain.');
+        }
             return redirect()->route('karyawan.index')->with('success', 'karyawan berhasil dihapus');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'tidak berhasil');

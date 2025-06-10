@@ -129,7 +129,7 @@ class TugasController extends Controller
             'deadline_id' => $deadline->id
         ]);
 
-        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil diperbarui');
+        return redirect()->route('project.index')->with('success', 'Tugas berhasil diperbarui');
     }
 
     /**
@@ -142,7 +142,7 @@ class TugasController extends Controller
     if ($deadline && $deadline->tugas()->count() === 0) {
         $deadline->delete();
     }
-        return redirect()->route('tugas.index')->with('success', 'Tugas berhasil dihapus');
+        return redirect()->route('project.index')->with('success', 'Tugas berhasil dihapus');
     }
    
 }

@@ -10,11 +10,14 @@
                 </ul>
             </div>
         @endif
-        <div class="card shadow-lg">
-            <div class="col-md-12">
-
-                <h2 class="text-center">Tambahkan project</h2>
-                <form action="{{ route('project.store') }}" method="POST" class="needs-validation" novalidate>
+         <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambahkan Project Baru</h4>
+                    </div>
+                    <div class="card-body shadow-lg">
+                           <form action="{{ route('project.store') }}" method="POST" class="needs-validation" novalidate>
                     @csrf
                     <div class="row g-3 need-validation ms-3 mx-3">
                         <div class="col-md-6">
@@ -63,22 +66,20 @@
                                 Masukkan deskripsi project
                             </div>
                         </div>
-
-
                     </div>
-                    <div class="mt-3 md-3 mb-3 ms-4 d-flex justify-content-between align-items-center">
-                        <button href="{{ route('project.index') }}" class="btn btn-primary">
-                            <i class="bi bi-arrow-left"></i>
-                        </button>
-                        <div class="mx-auto">
-                            <button type="submit" class="btn btn-primary" class="text-center">
-                                <i class="fas fa-save me-1"></i>
-                            </button>
-                        </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                                <a href="{{ route('project.index') }}" class="btn btn-secondary me-md-2">
+                                    <i class="fas fa-arrow-left me-1"></i> Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i> Simpan
+                                </button>
+                            </div>
                     </div>
-                </form>
+                  </form>
+                </div>
             </div>
-        </div>
+         </div>
     </div>
 @endsection
 @section('scripts')

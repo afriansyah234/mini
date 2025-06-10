@@ -2,13 +2,23 @@
 
 @section('content')
     <div class="container">
+        <div class="d-flex justify-content-between mb-3">
+            <a href="{{ route('project.index') }}" class="btn btn-secondary mb-3">
+                <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Project
+            </a>
+        </div>
         <h1 class="my-4">Project Kanban: {{ $project->nama_project }}</h1>
+        <div class="mb-3">
+            <a href="{{ route('tugas.create') }}?project_id={{ $project->id }}" class="btn btn-success mb-3">
+                <i class="fas fa-plus me-2"></i>Tambah Tugas
+            </a>
+        </div>
 
         @php
             // Definisikan warna untuk setiap status
             $statusColors = [
                 'belum dimulai' => 'secondary',
-                'dalam pengerjaan' => 'warning',
+                'dalam pengerjaan' => 'primary',
                 'menunggu review' => 'info',
                 'selesai' => 'success'
             ];
@@ -51,6 +61,18 @@
                                                 @endforeach
                                             </select>
                                         </form>
+                                        <div class="d-flex gap-1">
+                                             <a href="{{ route('tugas.edit', $tugas->id) }}" class="btn btn-sm btn-warning text-white mt-2">
+                                                <i class="fas fa-edit"></i> 
+                                            </a>
+                                            <form action="{{ route('tugas.destroy', $tugas->id) }}" method="POST" class="d-inline-block mt-2">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus tugas ini?')">
+                                                    <i class="fas fa-trash"></i> 
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach

@@ -36,7 +36,7 @@
                     @endif
                 </form>
 
-                <a href="{{ route('karyawan.create') }}" class="btn btn-primary mb-3">
+                <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">
                     <i class="fas fa-plus me-2"></i>Tambah Karyawan
                 </a>
 
