@@ -20,6 +20,10 @@ class Karyawan extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function tugas()
+    {
+        return $this->hasMany(Tugas::class);
+    }
     public function laporan()
     {
         return $this->hasMany(Laporan::class, 'atas_nama');
