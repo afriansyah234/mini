@@ -4,10 +4,10 @@
     <div class="container">
         <div class="d-flex justify-content-between mb-3">
             <a href="{{ route('project.index') }}" class="btn btn-secondary mb-3">
-                <i class="fas fa-arrow-left me-2"></i>Kembali ke Daftar Project
+                <i class="fas fa-arrow-left me-2"></i>Kembali
             </a>
         </div>
-        <h1 class="my-4">Project Kanban: {{ $project->nama_project }}</h1>
+        <h1 class="my-4">Project : {{ $project->nama_project }}</h1>
         <div class="mb-3">
             <a href="{{ route('tugas.create') }}?project_id={{ $project->id }}" class="btn btn-success mb-3">
                 <i class="fas fa-plus me-2"></i>Tambah Tugas

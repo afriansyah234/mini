@@ -8,13 +8,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Manajemen Project Dan Tugas</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <!-- Bootstrap 5 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-..." crossorigin="anonymous">
     <!-- Font Awesome CSS (Web Fonts + Icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
@@ -24,7 +25,7 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
+
 
 </head>
 
@@ -33,7 +34,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Manajemen Project Dan Tugas
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -45,16 +46,16 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('karyawan.index','karyawan.create','karyawan.edit') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('karyawan.index', 'karyawan.create', 'karyawan.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('project.index','project.show','project.create','project.edit') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('project.index', 'project.show', 'project.create', 'project.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('project.index') }}">Manajemen Project</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('laporan.index','laporan.show','laporan.create','laporan.edit') ? 'active border-bottom border-dark' : '' }}"
+                            <a class="nav-link {{ request()->routeIs('laporan.index', 'laporan.show', 'laporan.create', 'laporan.edit') ? 'active border-bottom border-dark' : '' }}"
                                 href="{{ route('laporan.index') }}">Laporan</a>
                         </li>
                     </ul>
@@ -84,7 +85,7 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -104,7 +105,8 @@
         </main>
     </div>
     <!-- Bootstrap JS (sudah kamu pakai sebelumnya, ini oke) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
+        crossorigin="anonymous"></script>
 
 </body>
 
