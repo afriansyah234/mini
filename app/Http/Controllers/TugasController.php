@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tugas;
 use App\Models\Project;
 use App\Models\Deadline;
+use App\Models\Karyawan;
 use App\Models\Status_tugas;
 use Illuminate\Http\Request;
 
@@ -55,7 +56,8 @@ class TugasController extends Controller
     {
         $project = Project::findOrFail(request()->project_id);
         $statuses = Status_tugas::all();
-        return view('tugas.create', compact('project', 'statuses'));
+        $karyawan = Karyawan::all();
+        return view('tugas.create', compact('project', 'statuses', 'karyawan'));
     }
 
     /**
@@ -69,7 +71,9 @@ class TugasController extends Controller
             'deskripsi' => 'nullable|string',
             'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
             'status_tugas_id' => 'required|exists:status_tugas,id',
-            'deadline' => 'required|date|after:today'
+            'deadline' => 'required|date|after:today',
+            'karyawan_id' => 'required|exists:karyawans,id',
+
         ]);
 
         $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
@@ -80,10 +84,11 @@ class TugasController extends Controller
             'deskripsi' => $validated['deskripsi'],
             'prioritas' => $validated['prioritas'],
             'status_tugas_id' => $validated['status_tugas_id'],
-            'deadline_id' => $deadline->id
+            'deadline_id' => $deadline->id,
+            'karyawan_id' => $validated['karyawan_id'],
         ]);
 
-        return redirect()->route('project.index')->with('success', 'Tugas berhasil ditambahkan');
+        return redirect()->route('project.show', $validated['project_id'])->with('success', 'Tugas berhasil ditambahkan');
     }
 
     /**
@@ -102,8 +107,9 @@ class TugasController extends Controller
     {
         $project = $tugas->project;
         $statuses = Status_tugas::all();
+        $karyawan = Karyawan::all();
         $deadline = $tugas->deadline ? $tugas->deadline->tanggal->format('Y-m-d') : null;
-        return view('tugas.edit', compact('tugas','project', 'statuses', 'deadline'));
+        return view('tugas.edit', compact('tugas', 'project', 'statuses', 'deadline', 'karyawan'));
     }
 
     /**
@@ -116,20 +122,27 @@ class TugasController extends Controller
             'deskripsi' => 'nullable|string',
             'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
             'status_tugas_id' => 'required|exists:status_tugas,id',
-            'deadline' => 'required|date|after:today'
+            'deadline' => 'required|date|after:today',
+            'karyawan_id' => 'required|exists:karyawans,id'
         ]);
 
-        $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
+        $deadline = Deadline::firstOrCreate(['tanggal' => $validated['deadline']]);
 
         $tugas->update([
             'judul_tugas' => $validated['judul_tugas'],
             'deskripsi' => $validated['deskripsi'],
             'prioritas' => $validated['prioritas'],
             'status_tugas_id' => $validated['status_tugas_id'],
-            'deadline_id' => $deadline->id
+            'deadline_id' => $deadline->id,
+            'karyawan_id' => $validated['karyawan_id'],
+
         ]);
 
-        return redirect()->route('project.index')->with('success', 'Tugas berhasil diperbarui');
+        // Redirect ke project.show dengan project_id dari tugas yang diupdate
+        return redirect()->route('project.show', $tugas->project_id)
+            ->with('success', 'Tugas berhasil diperbarui');
+
+
     }
 
     /**
@@ -137,12 +150,25 @@ class TugasController extends Controller
      */
     public function destroy(Tugas $tugas)
     {
-         $deadline = $tugas->deadline;
-        $tugas->delete();
-    if ($deadline && $deadline->tugas()->count() === 0) {
-        $deadline->delete();
+        try {
+            $project_id = $tugas->project_id; // Simpan project_id sebelum menghapus
+            $deadline = $tugas->deadline;
+
+            $tugas->delete();
+
+            // Hapus deadline jika tidak ada tugas lain yang menggunakan
+            if ($deadline && $deadline->tugas()->count() === 0) {
+                $deadline->delete();
+            }
+
+            // Redirect ke halaman project yang sesuai
+            return redirect()->route('project.show', $project_id)
+                ->with('success', 'Tugas berhasil dihapus');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Gagal menghapus tugas: ' . $e->getMessage());
+        }
     }
-        return redirect()->route('project.index')->with('success', 'Tugas berhasil dihapus');
-    }
-   
+
 }

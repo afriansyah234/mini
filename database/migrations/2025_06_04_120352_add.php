@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::table('tugas', function (Blueprint $table) {
             $table->foreignId('deadline_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('karyawan_id')->constrainded();
         });
     }
 

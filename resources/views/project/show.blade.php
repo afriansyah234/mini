@@ -45,8 +45,7 @@
                                         <p class="small text-muted">{{ Str::limit($tugas->deskripsi, 60) }}</p>
 
                                         @if($tugas->karyawan)
-                                            <p class="small mb-2">
-                                                <i class="fas fa-user"></i> {{ $tugas->karyawan->nama_karyawan }}
+                                            <p class="small mb-2">{{ $tugas->karyawan->nama_karyawan }}
                                             </p>
                                         @endif
 
@@ -62,14 +61,17 @@
                                             </select>
                                         </form>
                                         <div class="d-flex gap-1">
-                                             <a href="{{ route('tugas.edit', $tugas->id) }}" class="btn btn-sm btn-warning text-white mt-2">
-                                                <i class="fas fa-edit"></i> 
+                                            <a href="{{ route('tugas.edit', $tugas->id) }}"
+                                                class="btn btn-sm btn-warning text-white mt-2">
+                                                <i class="fas fa-edit"></i>
                                             </a>
-                                            <form action="{{ route('tugas.destroy', $tugas->id) }}" method="POST" class="d-inline-block mt-2">
+                                            <form action="{{ route('tugas.destroy', $tugas->id) }}" method="POST"
+                                                class="d-inline-block mt-2">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus tugas ini?')">
-                                                    <i class="fas fa-trash"></i> 
+                                                <button class="btn btn-sm btn-danger"
+                                                    onclick="return confirm('Yakin ingin menghapus tugas ini?')">
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
