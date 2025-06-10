@@ -41,17 +41,30 @@
                             @foreach($project->tugas->where('status.nama_status', $status) as $tugas)
                                 <div class="card mb-3 shadow-sm">
                                     <div class="card-body">
-                                        <h6 class="card-title">{{ $tugas->judul_tugas }}</h6>
-                                        <p class="small text-muted">{{ Str::limit($tugas->deskripsi, 60) }}</p>
+                                        <h6 class="card-title">Judul tugas : {{ $tugas->judul_tugas }}</h6>
+                                        <p class="small text-muted">Deskripsi : {{ Str::limit($tugas->deskripsi, 60) }}</p>
 
                                         @if($tugas->karyawan)
-                                            <p class="small mb-2">{{ $tugas->karyawan->nama_karyawan }}
+                                            <p class="small mb-2">Yang bertugas : {{ $tugas->karyawan->nama_karyawan }}
                                             </p>
                                         @endif
 
+                                        @foreach ($project->tugas as $tugas)
+                                            @php
+                                                $badge = [
+                                                    'rendah' => 'bg-secondary',
+                                                    'sedang' => 'bg-warning',
+                                                    'tinggi' => 'bg-warning',
+                                                    'krisis' => 'bg-success'
+                                                ][$tugas->prioritas] ?? 'bg-secondary';
+                                            @endphp
+                                            <span class="badge {{ $badge }}">{{ ucfirst($tugas->prioritas) }}</span>
+                                        @endforeach
+
+
                                         <form method="POST" action="{{ route('tugas.update-status', $tugas->id) }}">
                                             @csrf
-                                            <select name="status_tugas_id" class="form-select form-select-sm"
+                                            <select name="status_tugas_id" class="form-select form-select-sm mt-2"
                                                 onchange="this.form.submit()">
                                                 @foreach($statuses as $statusOpt)
                                                     <option value="{{ $statusOpt->id }}" {{ $tugas->status_tugas_id == $statusOpt->id ? 'selected' : '' }}>
@@ -60,7 +73,7 @@
                                                 @endforeach
                                             </select>
                                         </form>
-                                        <div class="d-flex gap-1">
+                                        <div class="d-flex gap-1 mt-2">
                                             <a href="{{ route('tugas.edit', $tugas->id) }}"
                                                 class="btn btn-sm btn-warning text-white mt-2">
                                                 <i class="fas fa-edit"></i>

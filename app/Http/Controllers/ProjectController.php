@@ -58,6 +58,7 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         // Load relasi yang diperlukan
+
         $project->load(['tugas.status']);
 
         // Ambil semua status tugas yang tersedia
@@ -130,4 +131,6 @@ class ProjectController extends Controller
         return redirect()->route('project.show', $tugas->project_id)
             ->with('success', 'Status tugas berhasil diperbarui!');
     }
+
+
 }

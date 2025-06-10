@@ -96,8 +96,7 @@ class TugasController extends Controller
      */
     public function show(Tugas $tugas)
     {
-        return view('tugas.index', compact('tugas'))
-        ;
+        return view('tugas.index', compact('tugas'));
     }
 
     /**

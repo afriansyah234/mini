@@ -25,10 +25,10 @@ class LaporanController extends Controller
      * Show the form for creating a new resource.
      */
     public function create($id)
-{
-    $project = Project::with('karyawan')->findOrFail($id); // ini penting
-    return view('laporan.create', compact('project'));
-}
+    {
+        $project = Project::with('karyawan')->findOrFail($id); // ini penting
+        return view('laporan.create', compact('project'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -72,8 +72,6 @@ class LaporanController extends Controller
      */
     public function show($id)
     {
-        $laporan = Laporan::findOrFail($id);
-        return view('laporan.show', compact( 'laporan'));
     }
 
     /**
@@ -82,13 +80,13 @@ class LaporanController extends Controller
     public function edit(Laporan $laporan)
     {
         $project = Project::with('karyawan')->findOrFail($laporan->project_id);
-    $laporan->load('lampiran');
+        $laporan->load('lampiran');
 
-    return view('laporan.edit', [
-        'laporan' => $laporan,
-        'project' => $project,
-        'karyawans' => Karyawan::all()
-    ]);
+        return view('laporan.edit', [
+            'laporan' => $laporan,
+            'project' => $project,
+            'karyawans' => Karyawan::all()
+        ]);
     }
 
     /**

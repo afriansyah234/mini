@@ -105,7 +105,7 @@
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="{{ route('tugas.index', $project->id) }}" class="btn btn-secondary me-md-2">
+                                <a href="{{ route('project.show', $project->id) }}" class="btn btn-secondary me-md-2">
                                     <i class="fas fa-arrow-left me-1"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">

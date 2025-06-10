@@ -13,16 +13,21 @@ class KaryawanController extends Controller
      */
     public function index(Request $request)
     {
-        $karyawans = Karyawan::all();
-        $departemen = Departemen::all();
         $search = $request->input('search');
+
         $karyawans = Karyawan::query()
+            ->with('departemen') // Eager load relasi departemen
             ->when($search, function ($query, $search) {
                 return $query->where('nama_karyawan', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('departemen', 'like', "%{$search}%");
+                    ->orWhereHas('departemen', function ($q) use ($search) {
+                        $q->where('nama_departemen', 'like', "%{$search}%");
+                    });
             })
             ->get();
+
+        $departemen = Departemen::all(); // Untuk dropdown/form lainnya
+
         return view('karyawan.index', compact('karyawans', 'departemen'));
     }
 
@@ -119,6 +124,6 @@ class KaryawanController extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan, tidak berhasil menghapus.');
         }
-        }
+    }
 
 }
