@@ -11,23 +11,18 @@
                 </ul>
             </div>
         @endif
-
-        <div class="card">
-            <div class="col-md-12">
-                <div class="ms-4 mt-4">
-                    <a href="{{ route('project.index') }}" class="btn btn-secondary">
-                        <i class="bi bi-arrow-left"></i> Kembali
-                    </a>
-                </div>
-
-                <h2 class="text-center my-4">Edit Project</h2>
-
-                <form action="{{ route('project.update', $project->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-
-                    <div class="row g-3 px-4">
-                        <div class="col-md-12">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="fas fa-edit"></i>Edit Data Project</h4>
+                    </div>
+                    <div class="card-body shadow-lg">
+                        <form action="{{ route('project.update', $project->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="row g-3">
+                          <div class="col-md-12">
                             <label for="nama_project" class="form-label">Nama Project</label>
                             <input type="text" name="nama_project"
                                 class="form-control @error('nama_project') is-invalid @enderror"
@@ -37,7 +32,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <div class="col-md-12">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
                             <textarea name="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror"
@@ -47,7 +41,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <div class="col-md-12">
                             <label for="karyawan_id" class="form-label">Penanggung Jawab</label>
                             <select name="karyawan_id" id="karyawan_id"
@@ -63,7 +56,6 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
                         <div class="col-md-12">
                             <label for="status_project" class="form-label">Status</label>
                             <select name="status_project" id="status_project"
@@ -80,13 +72,23 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-12 text-center my-4">
-                            <button type="submit" class="btn btn-primary px-4">
-                                <i class="bi bi-save"></i> Simpan Perubahan
-                            </button>
-                        </div>
+                                <!-- Tombol Submit dan Kembali -->
+                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                    <a href="{{ route('project.index') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save me-1"></i> Simpan
+                                    </button>
+                                </div>
+
+                                 </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
+            </div>
+        </div>
                  <script>
                                             (() => {
                                             'use strict'

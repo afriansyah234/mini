@@ -19,7 +19,7 @@
                 </div>
             @endif
 
-                    <div class="card-body needs-validation shadow-lg">
+                    <div class="card-body shadow-lg">
                         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data"
                             class="needs-validation" novalidate>
                             @csrf

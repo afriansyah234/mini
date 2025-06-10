@@ -14,7 +14,7 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah karyawan Baru</h4>
+                        <h4 class="mb-0"><i class="fas fa-edit"></i>Edit Data Karyawan</h4>
                     </div>
                     <div class="card-body shadow-lg">
                         <form action="{{ route('karyawan.update', $karyawans->id) }}" method="POST" class="needs-validation"

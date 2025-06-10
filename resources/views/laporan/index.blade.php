@@ -6,13 +6,29 @@
             <div class="col-md-12">
                 
                 <h1>Manajemen laporan</h1>
-               
-
-
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Terjadi kesalahan:</strong>
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        <strong>Gagal:</strong> {{ session('error') }}
+                    </div>
+                @endif
                 <table class="table table-bordered shadow mt-4">
                                 <!-- Table Headers -->
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Nama Project</th>
                                         <th>Deskripsi</th>
                                         <th>Status</th>
@@ -27,6 +43,7 @@
                                     @if($laporans->count() > 0)
                                         @foreach($laporans as $laporan)
                                             <tr>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $laporan->project->nama_project }}</td>
                                                 <td>{{ Str::limit($laporan->deskripsi_laporan, 50) }}</td>
                                                 <td>

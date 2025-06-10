@@ -50,6 +50,10 @@
         <a class="btn btn-info btn-sm text-white" href="{{ route('project.show', $project->id) }}">
             <i class="fas fa-eye fa-sm"></i>
         </a>
+         <a href="{{ route('project.edit', $project->id) }}"
+           class="btn btn-sm btn-warning text-white" title="Edit">
+             <i class="fas fa-edit"></i>
+         </a>
         <form action="{{ route('project.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus project ini?')">
             @csrf
             @method('DELETE')
@@ -57,9 +61,6 @@
                 <i class="fas fa-trash fa-sm"></i>
             </button>
         </form>
-          <a href="{{ route('laporan.create', $project->id) }}" class="btn btn-primary btn-sm text-white">
-    <i class="fas fa-file-alt fa-sm"></i> Buat Laporan
-    </a>
     </div>
 </div>
 
@@ -79,7 +80,9 @@
                                     <span class="badge {{ $badge }}">{{ ucfirst($project->status->status_project) }}</span>
                                 </p>
                                 <p><strong>Penanggung jawab:</strong> {{ $project->karyawan->nama_karyawan ?? '-' }}</p>
-                                
+                                <a href="{{ route('laporan.create', $project->id) }}" class="btn btn-primary btn-sm text-white w-full">
+                                <i class="fas fa-file-alt fa-sm"></i> Buat Laporan
+                                </a>
                             </div>
                         </div>
                     </div>

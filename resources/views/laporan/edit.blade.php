@@ -5,46 +5,35 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <h3 class="mb-0">EDit LAporan</h3>
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0"><i class="fas fa-edit"></i>Edit Data Laporan</h4>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body shadow-lg">
                     <form action="{{ route('laporan.update',$laporan->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <!-- Nama Project -->
-                        <div class="mb-3">
-                            <label for="project_id" class="form-label">Nama Project <span class="text-danger">*</span></label>
-                            <select name="project_id" id="project_id" class="form-select" required>
-                                <option disabled selected>-- Pilih Project --</option>
-                                @foreach ($projects as $project)
-                                    <option value="{{ $project->id }}" {{ old('project_id',$laporan->project_id) == $project->id ? 'selected' : '' }}>
-                                        {{ $project->nama_project }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('project_id')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <div class="mb-3 col-md-12">
+                                <label for="project_id" class="form-label">Pilih Project</label>
+                              <input type="hidden" name="project_id" class="form-control"  value="{{ $project->id }}">
+                              <input type="text"  class="form-control" value="{{ $project->nama_project }}" readonly>
+                                <div class="invalid-feedback">
+                                    Pilih nama project
+                                </div>
+                            </div>
 
                         <!-- Atas Nama -->
-                        <div class="mb-3">
-                            <label for="atas_nama" class="form-label">Atas Nama <span class="text-danger">*</span></label>
-                            <select name="atas_nama" id="atas_nama" class="form-select" required>
-                                <option disabled selected>-- Pilih Karyawan --</option>
-                                @foreach ($karyawans as $karyawan)
-                                    <option value="{{ $karyawan->id }}" {{ old('atas_nama',$laporan->atas_nama) == $karyawan->id ? 'selected' : '' }}>
-                                        {{ $karyawan->nama_karyawan }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('atas_nama')
-                                <div class="text-danger mt-1">{{ $message }}</div>
-                            @enderror
-                        </div>
+                            <div class="mb-3">
+                                <label for="karyawan_id" class="form-label">Penanggung Jawab</label>
+                                <input type="hidden" name="karyawan_id" class="form-control" value="{{ $project->karyawan_id }}">
+                                <input type="text"  class="form-control" value="{{ $project->karyawan->nama_karyawan }}" readonly>
+
+                                <div class="invalid-feedback">
+                                    Pilih penanggung jawab laporan
+                                </div>
+                            </div>
 
                         <!-- Deskripsi -->
                         <div class="mb-3">

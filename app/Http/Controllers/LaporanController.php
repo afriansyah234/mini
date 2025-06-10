@@ -81,10 +81,14 @@ class LaporanController extends Controller
      */
     public function edit(Laporan $laporan)
     {
-        $projects = Project::all();
-        $karyawans = Karyawan::all();
-        $laporan->load('lampiran'); // Memuat lampiran terkait laporan
-        return view('laporan.edit', compact('laporan', 'projects', 'karyawans'));
+        $project = Project::with('karyawan')->findOrFail($laporan->project_id);
+    $laporan->load('lampiran');
+
+    return view('laporan.edit', [
+        'laporan' => $laporan,
+        'project' => $project,
+        'karyawans' => Karyawan::all()
+    ]);
     }
 
     /**
@@ -93,8 +97,8 @@ class LaporanController extends Controller
     public function update(Request $request, Laporan $laporan)
     {
         $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'atas_nama' => 'required|exists:karyawans,id',
+            'project_id' => 'exists:projects,id',
+            'karyawan_id' => 'exists:karyawans,id',
             'statuslaporan' => 'required|string',
             'deskripsi_laporan' => 'nullable|string',
         ]);
