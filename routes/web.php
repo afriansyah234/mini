@@ -28,8 +28,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('tugas', TugasController::class);
     Route::resource('project', ProjectController::class);
     Route::resource('laporan', LaporanController::class);
-    Route::get('/kanban', [ProjectController::class, 'kanban'])->name('project.kanban');
-    Route::post('/projects/{project}/status', [ProjectController::class, 'updateStatus'])->name('project.update-status');
+
+    Route::post('/tugas/{tugas}/update-status', [ProjectController::class, 'updateStatus'])
+        ->name('tugas.update-status');
 });
 
 Auth::routes();

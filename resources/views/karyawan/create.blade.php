@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<div class="container">
-      @if ($errors->any())
+    <div class="container">
+        @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
@@ -10,18 +10,16 @@
                 </ul>
             </div>
         @endif
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
                         <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah karyawan Baru</h4>
                     </div>
-                <div class="card-body shadow-lg">
-                    <form action="{{ route('karyawan.store') }}" method="POST" class="needs-validation" novalidate>
-                        @csrf
-                        <div class="row g-3">
-                            <!-- Nama Karyawan -->
-                            <div class="col-md-6">
+                    <div class="card-body shadow-lg">
+                        <form action="{{ route('karyawan.store') }}" method="POST" class="needs-validation" novalidate>
+                            @csrf
+                            <div class="col-md-12">
                                 <label for="nama_karyawan" class="form-label">Nama Karyawan</label>
                                 <input type="text" class="form-control" id="nama_karyawan" name="nama_karyawan" required>
                                 <div class="invalid-feedback">
@@ -30,7 +28,7 @@
                             </div>
 
                             <!-- Email -->
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control" id="email" name="email" required>
                                 <div class="invalid-feedback">
@@ -48,7 +46,7 @@
                             </div>
 
                             <!-- Tombol Submit -->
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                                 <a href="{{ route('tugas.index') }}" class="btn btn-secondary me-md-2">
                                     <i class="fas fa-arrow-left me-1"></i> Kembali
                                 </a>
@@ -56,29 +54,28 @@
                                     <i class="fas fa-save me-1"></i> Simpan
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
     <script>
-      (() => {
-         'use strict'
+        (() => {
+            'use strict'
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
-              const forms = document.querySelectorAll('.needs-validation')
-                 // Loop over them and prevent submission
-                     Array.from(forms).forEach(form => {
-                    form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-              event.preventDefault()
-             event.stopPropagation()
-            }
-            form.classList.add('was-validated')
-            }, false)
+            const forms = document.querySelectorAll('.needs-validation')
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
             })
         })()
     </script>

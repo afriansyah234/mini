@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
 use App\Models\Project;
+use App\Models\Status_tugas;
 use App\Models\StatusProject;
+use App\Models\Tugas;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -53,10 +55,16 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        $project = Project::with('tugas')->findOrFail($id);
-        return view('project.show', compact('project'));
+        // Load relasi yang diperlukan
+        $project->load(['tugas.status']);
+
+        // Ambil semua status tugas yang tersedia
+        $statuses = Status_tugas::all();
+
+
+        return view('project.show', compact('project', 'statuses'));
     }
 
     /**
@@ -103,28 +111,17 @@ class ProjectController extends Controller
         return redirect()->route('project.index')->with('success', 'Project terhapus');
     }
 
-    public function kanban()
+
+
+    public function updateStatus(Request $request, Tugas $tugas)
     {
-        $statuses = StatusProject::all();
-        $projects = Project::with(['karyawan', 'status'])->get();
-        $lockPerencanaan = $projects->contains(function ($project) {
-            return $project->status->status_project !== 'perencanaan';
-        });
+        $validated = $request->validate([
+            'status_tugas_id' => 'required|exists:status_tugas,id'
+        ]);
 
-        $statusColors = [
-            'perencanaan' => 'info',
-            'berjalan' => 'warning',
-            'ditunda' => 'secondary',
-            'selesai' => 'success'
-        ];
+        $tugas->update($validated);
 
-        return view('project.kanban', compact('statuses', 'projects', 'statusColors', 'lockPerencanaan'));
-    }
-
-    // Update Project Status (Simple Form Submit)
-    public function updateStatus(Request $request, Project $project)
-    {
-        $project->update(['status_project' => $request->status_id]);
-        return back()->with('success', 'Status updated!');
+        return redirect()->route('project.show', $tugas->project_id)
+            ->with('success', 'Status tugas berhasil diperbarui!');
     }
 }
