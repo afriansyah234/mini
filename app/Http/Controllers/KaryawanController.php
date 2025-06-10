@@ -107,13 +107,18 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         try {
-            $karyawan = Karyawan::findOrFail($id)->delete();
-            if ($karyawan->projects()->exists() || $karyawan->tugas()->exists()) {
+            $karyawan = Karyawan::findOrFail($id);
+
+            if ($karyawan->project()->exists() || $karyawan->tugas()->exists()) {
                 return redirect()->back()->with('error', 'Karyawan masih digunakan di tabel lain.');
             }
-            return redirect()->route('karyawan.index')->with('success', 'karyawan berhasil dihapus');
+
+            $karyawan->delete();
+
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus.');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'tidak berhasil');
+            return redirect()->back()->with('error', 'Terjadi kesalahan, tidak berhasil menghapus.');
         }
     }
+
 }
