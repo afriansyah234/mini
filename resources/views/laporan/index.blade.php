@@ -6,9 +6,7 @@
             <div class="col-md-12">
                 
                 <h1>Manajemen laporan</h1>
-                <a href="{{ route('laporan.create') }}" class="btn btn-secondary">
-                    <i class="fas fa-plus me-2"></i>Buat Laporan Baru
-                </a>
+               
 
 
                 <table class="table table-bordered shadow mt-4">

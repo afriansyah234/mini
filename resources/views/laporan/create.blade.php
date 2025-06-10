@@ -6,8 +6,18 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Buat Laporan Baru</h3>
+                        <h3 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Buat Laporan</h3>
                     </div>
+                     @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Terjadi kesalahan:</strong>
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
                     <div class="card-body needs-validation shadow-lg">
                         <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data"
@@ -15,14 +25,8 @@
                             @csrf
                             <div class="mb-3 col-md-12">
                                 <label for="project_id" class="form-label">Pilih Project</label>
-                                <select name="project_id" id="project_id" class="form-select" required>
-                                    <option disabled selected>-- Pilih Project --</option>
-                                    @foreach ($projects as $project)
-                                        <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
-                                            {{ $project->nama_project }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                              <input type="hidden" name="project_id" class="form-control"  value="{{ $project->id }}">
+                              <input type="text"  class="form-control" value="{{ $project->nama_project }}" readonly>
                                 <div class="invalid-feedback">
                                     Pilih nama project
                                 </div>
@@ -30,15 +34,10 @@
 
                             <!-- Atas Nama -->
                             <div class="mb-3">
-                                <label for="atas_nama" class="form-label">Penanggung Jawab</label>
-                                <select name="atas_nama" id="atas_nama" class="form-select" required>
-                                    <option disabled selected>-- Pilih Karyawan --</option>
-                                    @foreach ($karyawans as $karyawan)
-                                        <option value="{{ $karyawan->id }}" {{ old('atas_nama') == $karyawan->id ? 'selected' : '' }}>
-                                            {{ $karyawan->nama_karyawan }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <label for="karyawan_id" class="form-label">Penanggung Jawab</label>
+                                <input type="hidden" name="karyawan_id" class="form-control" value="{{ $project->karyawan_id }}">
+                                <input type="text"  class="form-control" value="{{ $project->karyawan->nama_karyawan }}" readonly>
+
                                 <div class="invalid-feedback">
                                     Pilih penanggung jawab laporan
                                 </div>

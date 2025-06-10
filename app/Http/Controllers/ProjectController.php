@@ -107,6 +107,12 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Project::findOrFail($id);
+        if ($project->tugas()->exists()) {
+            return redirect()->route('project.index')->with('error', 'Project tidak dapat dihapus karena memiliki tugas terkait.');
+        }
+        if ($project->laporan()->exists()) {
+            return redirect()->route('project.index')->with('error', 'Project tidak dapat dihapus karena memiliki laporan terkait.');
+        }
         $project->delete();
         return redirect()->route('project.index')->with('success', 'Project terhapus');
     }

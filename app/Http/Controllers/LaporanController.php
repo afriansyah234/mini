@@ -24,13 +24,11 @@ class LaporanController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        $laporans = Laporan::all();
-        $projects = Project::all();
-        $karyawans = Karyawan::all();
-        return view('laporan.create', compact('laporans', 'projects', 'karyawans'));
-    }
+    public function create($id)
+{
+    $project = Project::with('karyawan')->findOrFail($id); // ini penting
+    return view('laporan.create', compact('project'));
+}
 
     /**
      * Store a newly created resource in storage.
@@ -39,8 +37,8 @@ class LaporanController extends Controller
     {
         // Validasi input
         $validated = $request->validate([
-            'project_id' => 'required|exists:projects,id',
-            'atas_nama' => 'required|exists:karyawans,id',
+            'project_id' => 'exists:projects,id',
+            'karyawan_id' => 'exists:karyawans,id',
             'deskripsi_laporan' => 'nullable|string',
             'lampiran.*' => 'file|mimes:pdf,jpg,jpeg,png,doc,docx,xls,xlsx|max:5120' // 5MB
         ]);

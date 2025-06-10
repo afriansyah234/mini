@@ -19,6 +19,11 @@
                     </ul>
                 </div>
             @endif
+             @if (session('error'))
+                    <div class="alert alert-danger">
+                        <strong>Gagal:</strong> {{ session('error') }}
+                    </div>
+                @endif
 
             <div class="mb-3">
                 <a class="btn btn-success" href="{{ route('project.create') }}">
@@ -52,6 +57,9 @@
                 <i class="fas fa-trash fa-sm"></i>
             </button>
         </form>
+          <a href="{{ route('laporan.create', $project->id) }}" class="btn btn-primary btn-sm text-white">
+    <i class="fas fa-file-alt fa-sm"></i> Buat Laporan
+    </a>
     </div>
 </div>
 

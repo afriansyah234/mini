@@ -29,10 +29,12 @@ Route::middleware(['auth'])->group(function () {
         'tugas' => 'tugas'
     ]);
     Route::resource('project', ProjectController::class);
-    Route::resource('laporan', LaporanController::class);
+    Route::resource('laporan', LaporanController::class)->except(['create']);
 
     Route::post('/tugas/{tugas}/update-status', [ProjectController::class, 'updateStatus'])
         ->name('tugas.update-status');
+        Route::get('/laporan/create/{id}', [LaporanController::class, 'create'])->name('laporan.create');
+
 });
 
 Auth::routes();

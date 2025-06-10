@@ -19,10 +19,10 @@
                     </div>
                 @endif
                 @if (session('error'))
-    <div class="alert alert-danger">
-        <strong>Gagal:</strong> {{ session('error') }}
-    </div>
-@endif
+                    <div class="alert alert-danger">
+                        <strong>Gagal:</strong> {{ session('error') }}
+                    </div>
+                @endif
 
                 <h1>Manajemen Karyawan</h1>
 
