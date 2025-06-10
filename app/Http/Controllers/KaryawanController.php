@@ -104,7 +104,7 @@ class KaryawanController extends Controller
             return redirect()->back()->with('error', 'Karyawan masih digunakan di tabel lain.');
         }
 
-        $karyawan->delete();
+        $karyawan->delete(); 
 
         return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus.');
     } catch (\Throwable $th) {
