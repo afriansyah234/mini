@@ -15,15 +15,15 @@ class KaryawanController extends Controller
     {
         $karyawans = Karyawan::all();
         $departemen = Departemen::all();
-            $search = $request->input('search');
-                $karyawans = Karyawan::query()
-                    ->when($search, function($query, $search) {
-                        return $query->where('nama_karyawan', 'like', "%{$search}%")
-                                    ->orWhere('email', 'like', "%{$search}%")
-                                    ->orWhere('departemen', 'like', "%{$search}%");
-                    })
-                    ->get();
-        return view('karyawan.index', compact('karyawans','departemen'));
+        $search = $request->input('search');
+        $karyawans = Karyawan::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('nama_karyawan', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('departemen', 'like', "%{$search}%");
+            })
+            ->get();
+        return view('karyawan.index', compact('karyawans', 'departemen'));
     }
 
     /**
@@ -45,7 +45,7 @@ class KaryawanController extends Controller
             'email' => 'required|email|unique:karyawans,email',
             'departemen' => 'required|string'
         ]);
-       $departemen =  Departemen::firstOrCreate([
+        $departemen = Departemen::firstOrCreate([
             'nama_departemen' => $request->departemen
         ]);
         Karyawan::create([
@@ -53,7 +53,7 @@ class KaryawanController extends Controller
             'email' => $validasi['email'],
             'departemen_id' => $departemen->id // Asumsi ada relasi ke tabel departemen
         ]);
-        
+
         return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil ditambahkan');
     }
 
@@ -78,18 +78,27 @@ class KaryawanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Karyawan $karyawan)
     {
         $validasi = $request->validate([
             'nama_karyawan' => 'required',
-            'email' => 'required',
-            'departemen' => 'required'
+            'email' => 'required|email|unique:karyawans,email,' . $karyawan->id,
+            'departemen' => 'required|string'
         ]);
 
-        $karyawans = Karyawan::findOrFail($id);
-        $karyawans->update($validasi);
+        // Cari atau buat departemen baru
+        $departemen = Departemen::firstOrCreate([
+            'nama_departemen' => $request->departemen
+        ]);
 
-        return redirect()->route('karyawan.index')->with('success', 'karyawan bertambah');
+        // Update data karyawan
+        $karyawan->update([
+            'nama_karyawan' => $validasi['nama_karyawan'],
+            'email' => $validasi['email'],
+            'departemen_id' => $departemen->id
+        ]);
+
+        return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui');
     }
 
     /**
@@ -98,17 +107,18 @@ class KaryawanController extends Controller
     public function destroy($id)
     {
         try {
-        $karyawan = Karyawan::findOrFail($id);
+            $karyawan = Karyawan::findOrFail($id);
 
-        if ($karyawan->project()->exists() || $karyawan->tugas()->exists()) {
-            return redirect()->back()->with('error', 'Karyawan masih digunakan di tabel lain.');
+            if ($karyawan->project()->exists() || $karyawan->tugas()->exists()) {
+                return redirect()->back()->with('error', 'Karyawan masih digunakan di tabel lain.');
+            }
+
+            $karyawan->delete();
+
+            return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan, tidak berhasil menghapus.');
+        }
         }
 
-        $karyawan->delete(); 
-
-        return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil dihapus.');
-    } catch (\Throwable $th) {
-        return redirect()->back()->with('error', 'Terjadi kesalahan, tidak berhasil menghapus.');
-    }
-    }
 }
