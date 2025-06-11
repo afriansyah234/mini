@@ -33,11 +33,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/tugas/{tugas}/update-status', [ProjectController::class, 'updateStatus'])
         ->name('tugas.update-status');
-        Route::get('/laporan/create/{id}', [LaporanController::class, 'create'])->name('laporan.create');
+    Route::get('/laporan/create/{id}', [LaporanController::class, 'create'])->name('laporan.create');
+
+    Route::get('/history', [ProjectController::class, 'history'])->name('project.history');
+
+    Route::get('/Thistory', [TugasController::class, 'history'])->name('tugas.history');
 
 });
 
 Auth::routes();
 
-Route::get('/karyawan', [App\Http\Controllers\KaryawanController::class, 'index'])->name('karyawan.index');
 

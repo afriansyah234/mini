@@ -170,4 +170,14 @@ class TugasController extends Controller
         }
     }
 
+    public function history()
+    {
+        $tugas = Tugas::whereHas('status', function ($query) {
+            $query->where('nama_status', 'selesai');
+        })->with(['status', 'karyawan', 'deadline'])->get();
+
+        return view('tugas.history', compact('tugas'));
+    }
+
+
 }

@@ -50,35 +50,7 @@
 
 </head>
 
-<style>
-    .sidebar {
-        width: 200px;
-        transition: width 0.3s;
-        overflow: hidden;
-    }
 
-    .sidebar.collapsed {
-        width: 60px;
-        /* Hanya cukup untuk icon */
-    }
-
-    .sidebar .menu-item {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-    }
-
-    .sidebar .menu-icon {
-        font-size: 20px;
-        width: 40px;
-        text-align: center;
-    }
-
-    /* Ini yang menyembunyikan teks */
-    .sidebar.collapsed .menu-label {
-        display: none;
-    }
-</style>
 
 <body class="hold-transition sidebar-mini">
     <div id="wrapper">
@@ -122,8 +94,6 @@
     <script src="{{asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('lte/dist/js/adminlte.js')}}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{asset('lte/dist/js/demo.js')}}"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script>
 

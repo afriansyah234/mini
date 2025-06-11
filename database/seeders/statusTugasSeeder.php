@@ -13,7 +13,8 @@ class StatusTugasSeeder extends Seeder
             ['nama_status' => 'belum dimulai'],
             ['nama_status' => 'dalam pengerjaan'],
             ['nama_status' => 'menunggu review'],
-            ['nama_status' => 'selesai']
+            ['nama_status' => 'selesai'],
+            ['nama_status' => 'telat']
         ];
 
         foreach ($statuses as $status) {

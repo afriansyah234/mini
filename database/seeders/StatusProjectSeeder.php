@@ -17,7 +17,8 @@ class StatusProjectSeeder extends Seeder
             ['status_project' => 'perencanaan'],
             ['status_project' => 'berjalan'],
             ['status_project' => 'ditunda'],
-            ['status_project' => 'selesai']
+            ['status_project' => 'selesai'],
+            ['status_project' => 'telat']
         ];
 
         foreach ($statuses as $status) {

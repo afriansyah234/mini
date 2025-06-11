@@ -16,10 +16,24 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['status', 'karyawan'])->latest()->get();
+        $today = now()->startOfDay();
 
-        return view('project.index', compact('projects'));
+        $projects = Project::whereHas('status', function ($query) {
+            $query->where('status_project', '!=', 'selesai');
+        })->get();
+
+
+        $projectsSebelumDeadline = $projects->filter(function ($project) use ($today) {
+            return !$project->deadline || $project->deadline >= $today;
+        });
+
+        $projectsTelat = $projects->filter(function ($project) use ($today) {
+            return $project->deadline && $project->deadline < $today;
+        });
+
+        return view('project.index', compact('projectsSebelumDeadline', 'projectsTelat', 'projects'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,19 +50,22 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'nama_project' => 'required|string',
+            'karyawan_id' => 'required|exists:karyawans,id',
+            'status_project' => 'required|exists:status_projects,id',
             'deskripsi' => 'required|string',
-            'status_project' => 'required|exists:status_projects,id', // Sesuai nama kolom
-            'karyawan_id' => 'required|exists:karyawans,id'
+            'deadline' => 'required|date|after_or_equal:today',
         ]);
 
         Project::create([
-            'nama_project' => $validated['nama_project'],
-            'deskripsi' => $validated['deskripsi'],
-            'status_project' => $validated['status_project'], // Sesuai nama kolom
-            'karyawan_id' => $validated['karyawan_id'],
+            'nama_project' => $request->nama_project,
+            'karyawan_id' => $request->karyawan_id,
+            'status_project' => $request->status_project,
+            'deskripsi' => $request->deskripsi,
+            'deadline' => $request->deadline,
         ]);
+
         return redirect()->route('project.index')->with('success', 'Project berhasil dibuat');
     }
 
@@ -57,16 +74,26 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        // Load relasi yang diperlukan
+        // Tambahkan logika ini sebelum mengirim ke view
+        $telatStatusId = Status_tugas::where('nama_status', 'telat')->value('id');
 
-        $project->load(['tugas.status']);
+        foreach ($project->tugas as $tugas) {
+            if (
+                $tugas->deadline &&
+                $tugas->deadline->tanggal < now() &&
+                $tugas->status->nama_status !== 'selesai' &&
+                $tugas->status->nama_status !== 'telat'
+            ) {
+                $tugas->status_tugas_id = $telatStatusId;
+                $tugas->save();
+            }
+        }
 
-        // Ambil semua status tugas yang tersedia
-        $statuses = Status_tugas::all();
-
+        $statuses = Status_tugas::all(); // kirim juga untuk dropdown
 
         return view('project.show', compact('project', 'statuses'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -131,6 +158,17 @@ class ProjectController extends Controller
         return redirect()->route('project.show', $tugas->project_id)
             ->with('success', 'Status tugas berhasil diperbarui!');
     }
+
+
+    public function history()
+    {
+        $projects = Project::whereHas('status', function ($query) {
+            $query->where('status_project', 'selesai');
+        })->get();
+
+        return view('project.history', compact('projects'));
+    }
+
 
 
 }

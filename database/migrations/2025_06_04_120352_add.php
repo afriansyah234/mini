@@ -14,6 +14,10 @@ return new class extends Migration {
             $table->foreignId('deadline_id')->constrained()->cascadeOnDelete();
             $table->foreignId('karyawan_id')->constrainded();
         });
+
+        Schema::table('projects', function (Blueprint $table) {
+            $table->date('deadline')->nullable()->after('deskripsi');
+        });
     }
 
     /**
@@ -22,6 +26,10 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('tugas', function (Blueprint $table) {
+            //
+        });
+
+        Schema::table('projects', function (Blueprint $table) {
             //
         });
     }

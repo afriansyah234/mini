@@ -11,6 +11,7 @@ class Project extends Model
     protected $fillable = [
         'nama_project',
         'deskripsi',
+        'deadline',
         'status_project',
         'karyawan_id'
     ];
@@ -35,4 +36,13 @@ class Project extends Model
     {
         return $this->hasMany(Tugas::class);
     }
+
+    // App\Models\Project.php
+    public function scopeSelesai($query)
+    {
+        return $query->whereHas('status', function ($q) {
+            $q->where('status_project', 'selesai');
+        });
+    }
+
 }
