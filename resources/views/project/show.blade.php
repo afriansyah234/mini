@@ -38,6 +38,7 @@
                             </span>
                         </div>
                         <div class="card-body">
+
                             @foreach($project->tugas->where('status.nama_status', $status) as $tugas)
                                 <div class="card mb-3 shadow-sm">
                                     <div class="card-body">
@@ -48,6 +49,8 @@
                                             <p class="small mb-2">Yang bertugas : {{ $tugas->karyawan->nama_karyawan }}
                                             </p>
                                         @endif
+
+                                        <span>{{ $tugas->deadline->tanggal }}</span>
 
                                         @foreach ($project->tugas as $tugas)
                                             @php
@@ -60,7 +63,6 @@
                                             @endphp
                                             <span class="badge {{ $badge }}">{{ ucfirst($tugas->prioritas) }}</span>
                                         @endforeach
-
 
                                         <form method="POST" action="{{ route('tugas.update-status', $tugas->id) }}">
                                             @csrf

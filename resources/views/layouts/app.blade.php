@@ -10,18 +10,39 @@
 
     <title>Manajemen Project Dan Tugas</title>
 
+
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-..." crossorigin="anonymous">
-    <!-- Font Awesome CSS (Web Fonts + Icons) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Bootstrap Icons CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/fontawesome-free/css/all.min.css') }}">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet"
+        href="{{ asset('lte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+
+    <!-- iCheck -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/jqvmap/jqvmap.min.css') }}">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('lte/dist/css/adminlte.min.css') }}">
+
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/daterangepicker/daterangepicker.css') }}">
+
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ asset('lte/plugins/summernote/summernote-bs4.min.css') }}">
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -29,84 +50,82 @@
 
 </head>
 
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Manajemen Project Dan Tugas
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<style>
+    .sidebar {
+        width: 200px;
+        transition: width 0.3s;
+        overflow: hidden;
+    }
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('karyawan.index', 'karyawan.create', 'karyawan.edit') ? 'active border-bottom border-dark' : '' }}"
-                                href="{{ route('karyawan.index') }}">Manajemen Karyawan</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('project.index', 'project.show', 'project.create', 'project.edit') ? 'active border-bottom border-dark' : '' }}"
-                                href="{{ route('project.index') }}">Manajemen Project</a>
-                        </li>
+    .sidebar.collapsed {
+        width: 60px;
+        /* Hanya cukup untuk icon */
+    }
 
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('laporan.index', 'laporan.show', 'laporan.create', 'laporan.edit') ? 'active border-bottom border-dark' : '' }}"
-                                href="{{ route('laporan.index') }}">Laporan</a>
-                        </li>
-                    </ul>
+    .sidebar .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+    }
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
+    .sidebar .menu-icon {
+        font-size: 20px;
+        width: 40px;
+        text-align: center;
+    }
 
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
+    /* Ini yang menyembunyikan teks */
+    .sidebar.collapsed .menu-label {
+        display: none;
+    }
+</style>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                                                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
+<body class="hold-transition sidebar-mini">
+    <div id="wrapper">
+        @include('partials.sidebar')
+        @include('partials.navbar')
+        <main class="content-wrapper">
             @yield('content')
         </main>
+
     </div>
     <!-- Bootstrap JS (sudah kamu pakai sebelumnya, ini oke) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-..."
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-VuC5fXj8VlzK82mh+TbK1kxCI2U9qGosQOYxJAfJ6szHTqp6PU1gwD+5ZoE5VZ09"
         crossorigin="anonymous"></script>
+    <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="{{asset('lte/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- ChartJS -->
+    <script src="{{asset('lte/plugins/chart.js/Chart.min.js')}}"></script>
+    <!-- Sparkline -->
+    <script src="{{asset('lte/plugins/sparklines/sparkline.js')}}"></script>
+    <!-- JQVMap -->
+    <script src="{{asset('lte/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
+    <script src="{{asset('lte/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="{{asset('lte/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+    <!-- daterangepicker -->
+    <script src="{{asset('lte/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('lte/plugins/daterangepicker/daterangepicker.js')}}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{asset('lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+    <!-- Summernote -->
+    <script src="{{asset('lte/plugins/summernote/summernote-bs4.min.js')}}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{asset('lte/dist/js/adminlte.js')}}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{asset('lte/dist/js/demo.js')}}"></script>
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script>
 
 </body>
 
