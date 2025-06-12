@@ -178,24 +178,21 @@ class ProjectController extends Controller
     }
  public function detail($id)
 {
-    $project = Project::with('tugas.status')->findOrFail($id); // pastikan eager loading
+     $project = Project::with(['tugas.status'])->findOrFail($id); // penting: eager load 'status'
     $penanggungjawab = $project->penanggungjawab;
     $anggota = $project->anggota;
 
-    // Untuk chart
-    $statusSelesaiId = Status_tugas::where('nama_status', 'selesai')->value('id');
-
     $totaltugas = $project->tugas->count();
-    $tugasselesai = $project->tugas->where('status_tugas_id', $statusSelesaiId)->count();
+
+    $tugasselesai = $project->tugas->filter(function($tugas) {
+        return $tugas->status && $tugas->status->nama_status === 'selesai';
+    })->count();
+
     $tugasbelumselesai = $totaltugas - $tugasselesai;
 
     return view('project.detail', compact(
         'project', 'anggota', 'penanggungjawab',
         'totaltugas', 'tugasselesai', 'tugasbelumselesai'
     ));
-}
-
-
-
-
+    }
 }

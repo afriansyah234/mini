@@ -40,7 +40,7 @@
                                     <option value="" disabled selected>Pilih karyawan</option>
                                     @foreach($karyawan as $k)
                                         <option value="{{ $k->id }}" {{ old('karyawan_id') == $k->id ? 'selected' : '' }}>
-                                            {{ $k->nama_karyawan }}
+                                            {{ $k->nama_karyawan }}-- {{ $k->departemen->nama_departemen }}
                                         </option>
                                     @endforeach
                                 </select>

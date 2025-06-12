@@ -30,8 +30,14 @@
                     @endif
                     </ul>
                     <hr>
-                    <h5>Progress Tugas</h5>
-                    <canvas id="tugasDonutChart" width="400" height="200"></canvas>
+                    <div class="mt-5">
+                        <h5>Status Tugas</h5>
+                         <p>Selesai: {{ $tugasselesai }}, Belum: {{ $tugasbelumselesai }}, Total: {{ $totaltugas }}</p>
+                         <input type="text" class="knob" value="30" data-width="120" data-height="120"
+                           data-fgColor="#f56954">
+
+
+                    </div>
 
                 </div>
             </div>
@@ -40,23 +46,24 @@
     </div>
 @endsection
 @section('scripts')
-
-<canvas id="testChart"></canvas>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@php
+    $selesai = (int) $tugasselesai;
+    $belum = (int) $tugasbelumselesai;
+    $total = max(1, (int) $totaltugas);
+@endphp
+
 <script>
-const ctx = document.getElementById('testChart').getContext('2d');
-new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-        labels: ['Test 1', 'Test 2'],
-        datasets: [{
-            data: [3, 2],
-            backgroundColor: ['blue', 'orange']
-        }]
-    }
-});
+    const selesai = {{ $selesai }};
+    const belum = {{ $belum }};
+    const total = {{ $total }};
 </script>
 
 
+<script>
+    $(function () {
+        $(".knob").knob();
+    });
+</script>
 @endsection

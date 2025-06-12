@@ -94,8 +94,8 @@
     <script src="{{asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('lte/dist/js/adminlte.js')}}"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="{{asset('lte/dist/js/pages/dashboard.js')}}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @yield('scripts')
 </body>
