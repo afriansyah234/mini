@@ -67,7 +67,8 @@
                                         <option value="" disabled>Pilih Status</option>
                                         @foreach($statuss as $status)
                                             <option value="{{ $status->id }}" {{ old('status_project', $project->status_project) == $status->id ? 'selected' : '' }}>
-                                                {{ $status->status_project }}</option>
+                                                {{ $status->status_project }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     @error('status_project')
@@ -134,6 +135,7 @@
             });
         });
     </script>
+
     <script>
         (() => {
             'use strict'
