@@ -30,8 +30,9 @@
                                 <div class="invalid-feedback">
                                     Masukkan judul tugas
                                 </div>
-
                             </div>
+
+
 
                             <div class="mb-3">
                                 <label for="karyawan_id" class="form-label">Yang bertugas</label>
@@ -97,7 +98,8 @@
                             @endphp
                             <div class="mb-3">
                                 <label>Deadline</label>
-                                <input type="date" name="deadline" class="form-control" required min="{{ $besok }}">
+                                <input type="date" name="deadline" class="form-control" required min="{{ $besok }}"
+                                    max="{{ $project->deadline }}">
                             </div>
 
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
