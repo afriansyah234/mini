@@ -17,9 +17,13 @@ class Project extends Model
     ];
     protected $table = 'projects';
 
-    public function karyawan()
+    public function penanggungjawab()
     {
         return $this->belongsTo(Karyawan::class, 'karyawan_id');
+    }
+     public function anggota()
+    {
+        return $this->belongsToMany(Karyawan::class, 'anggota_project');
     }
 
     public function laporan()

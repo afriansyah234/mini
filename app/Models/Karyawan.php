@@ -17,7 +17,7 @@ class Karyawan extends Model
     protected $table = 'karyawans';
     public function project()
     {
-        return $this->hasMany(Project::class);
+        return $this->belongsToMany(Project::class,'anggota_project');
     }
 
     public function tugas()

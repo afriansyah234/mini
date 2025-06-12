@@ -40,7 +40,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $karyawans = Karyawan::all();
+        $karyawans = Karyawan::with('departemen')->get();
         $statuss = StatusProject::all();
         return view('project.create', compact('karyawans', 'statuss'));
     }
@@ -56,15 +56,23 @@ class ProjectController extends Controller
             'status_project' => 'required|exists:status_projects,id',
             'deskripsi' => 'required|string',
             'deadline' => 'required|date|after_or_equal:today',
+            'anggota_id' => 'required|array',
+            'anggota_id.*' => 'exists:karyawans,id',
         ]);
 
-        Project::create([
+        $project = Project::create([
             'nama_project' => $request->nama_project,
             'karyawan_id' => $request->karyawan_id,
             'status_project' => $request->status_project,
             'deskripsi' => $request->deskripsi,
             'deadline' => $request->deadline,
         ]);
+        $anggota = collect($request->anggota_id)->filter(function ($id) use ($request) {
+            return $id != $request->karyawan_id;
+        });
+        $project->anggota()->attach($anggota);
+
+        
 
         return redirect()->route('project.index')->with('success', 'Project berhasil dibuat');
     }
@@ -87,11 +95,11 @@ class ProjectController extends Controller
                 $tugas->status_tugas_id = $telatStatusId;
                 $tugas->save();
             }
-        }
+        }   
 
         $statuses = Status_tugas::all(); // kirim juga untuk dropdown
 
-        return view('project.show', compact('project', 'statuses'));
+        return view('project.show', compact('project', 'statuses',));
     }
 
 
@@ -168,6 +176,25 @@ class ProjectController extends Controller
 
         return view('project.history', compact('projects'));
     }
+ public function detail($id)
+{
+    $project = Project::with('tugas.status')->findOrFail($id); // pastikan eager loading
+    $penanggungjawab = $project->penanggungjawab;
+    $anggota = $project->anggota;
+
+    // Untuk chart
+    $statusSelesaiId = Status_tugas::where('nama_status', 'selesai')->value('id');
+
+    $totaltugas = $project->tugas->count();
+    $tugasselesai = $project->tugas->where('status_tugas_id', $statusSelesaiId)->count();
+    $tugasbelumselesai = $totaltugas - $tugasselesai;
+
+    return view('project.detail', compact(
+        'project', 'anggota', 'penanggungjawab',
+        'totaltugas', 'tugasselesai', 'tugasbelumselesai'
+    ));
+}
+
 
 
 

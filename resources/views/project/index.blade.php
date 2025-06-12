@@ -29,9 +29,8 @@
                     <a class="btn btn-success" href="{{ route('project.create') }}">
                         <i class="bi bi-plus-circle me-2"></i>Tambah project
                     </a>
-                    <!-- <a class="btn btn-success" href="{{ route('project.create') }}">
-                                <i class="bi bi-card-list me-2"></i></i>Cek Project
-                            </a> -->
+                
+                    
 
                 </div>
 
@@ -39,9 +38,9 @@
                     <p class="text-center text-muted">Belum ada project yang ditambahkan.</p>
                 @endif
 
-                <div class="row">
+               
                     <div class="card mb-4 shadow">
-                        <div class="card-header bg-success text-white">
+                        <div class="card-header bg-info text-white">
                             <h5 class="mb-0">Project Belum Melewati Deadline</h5>
                         </div>
                         <div class="card-body">
@@ -69,11 +68,7 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
-        </div>
     </div>
 @endsection

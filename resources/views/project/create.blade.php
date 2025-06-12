@@ -40,6 +40,18 @@
                                         Pilih penanggungjawab project
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <label for="anggota_id">Pilih Anggota</label>
+                                    <select name="anggota_id[]" id="anggota_id" class="form-select select2" multiple required>
+                                        <option disabled>-- Pilih Anggota --</option>
+                                        @foreach ($karyawans as $karyawan)
+                                            <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} - {{ $karyawan->departemen->nama_departemen }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Pilih anggota project   
+                                        </div> 
+                                </div>
                                 <div class="mb-3">
                                     <label for="status_project" class="form-label">Status</label>
                                     <select class="form-select @error('status_project') is-invalid @enderror"
@@ -92,6 +104,28 @@
     </div>
 @endsection
 @section('scripts')
+   <!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<script>
+    $(document).ready(function () {
+        $('#anggota_id').select2({
+            placeholder: "-- Pilih Anggota --",
+            allowClear: true,
+            width: '100%'
+        });
+         $('form').on('submit', function () {
+            const selected = $('#anggota_id').val();
+            if (!selected || selected.length === 0) {
+                $('#anggota_id').addClass('is-invalid');
+                return false; // cegah submit
+            } else {
+                $('#anggota_id').removeClass('is-invalid');
+            }
+        });
+    });
+</script>
     <script>
         (() => {
             'use strict'

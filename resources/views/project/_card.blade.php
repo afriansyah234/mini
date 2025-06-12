@@ -3,9 +3,7 @@
         <div class="card-header d-flex justify-content-between align-items-center py-2">
             <h6 class="mb-0 fw-semibold">{{ $project->nama_project }}</h6>
             <div class="d-flex gap-1">
-                <a class="btn btn-info btn-sm text-white" href="{{ route('project.show', $project->id) }}">
-                    <i class="fas fa-eye fa-sm"></i>
-                </a>
+               
                 <a href="{{ route('project.edit', $project->id) }}" class="btn btn-sm btn-warning text-white"
                     title="Edit">
                     <i class="fas fa-edit"></i>
@@ -46,10 +44,10 @@
             <p><strong>Deadline:</strong>
                 {{ $project->deadline ? \Carbon\Carbon::parse($project->deadline)->translatedFormat('d F Y') : '-' }}
             </p>
-            <p><strong>Penanggung jawab:</strong> {{ $project->karyawan->nama_karyawan ?? '-' }}</p>
-            <a href="{{ route('laporan.create', $project->id) }}" class="btn btn-primary btn-sm text-white w-full">
-                <i class="fas fa-file-alt fa-sm"></i> Buat Laporan
-            </a>
+            <p><strong>Penanggung jawab:</strong> {{ $project->penanggungjawab->nama_karyawan ?? '-' }}</p>
+                    <a class="btn btn-success" href="{{ route('project.detail',$project->id) }}">
+                                <i class="fas fa-eye fa-sm"></i> Detail Project
+                            </a>
         </div>
     </div>
 </div>
