@@ -132,45 +132,64 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        $tugas = Tugas::findOrFail($id);
-        $project = $tugas->project;
-        $karyawan = Karyawan::all();
-        $statuses = Status_tugas::all();
-        $kategoriTugas = $project->kategoriTugas; // relasi 1 project -> banyak kategori
+        $karyawans = Karyawan::with('departemen')->get();
+        $statuss = StatusProject::all();
+        $project->load('anggota'); // Load relasi anggota
 
-        return view('tugas.edit', compact('tugas', 'project', 'karyawan', 'statuses', 'kategoriTugas'));
+        $kategoriTugas = KategoriTugas::where('project_id', $project->id)->get();
+        $kategoriTugasJson = $kategoriTugas->map(fn($k) => ['value' => $k->nama_kategori]);
+
+        return view('project.edit', compact('project', 'karyawans', 'statuss', 'kategoriTugasJson'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        $validated = $request->validate([
-            'judul_tugas' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
-            'status_tugas_id' => 'required|exists:status_tugas,id',
-            'deadline' => 'required|date|after:today',
+        $request->validate([
+            'nama_project' => 'required|string',
             'karyawan_id' => 'required|exists:karyawans,id',
-            'kategori_tugas_id' => 'required|exists:kategori_tugas,id',
+            'status_project' => 'required|exists:status_projects,id',
+            'deskripsi' => 'required|string',
+            'deadline' => 'required|date|after_or_equal:today',
+            'anggota_id' => 'required|array',
+            'anggota_id.*' => 'exists:karyawans,id',
+            'kategori_tugas' => 'required|string'
         ]);
 
-        $tugas = Tugas::findOrFail($id);
-        $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
-
-        $tugas->update([
-            'judul_tugas' => $validated['judul_tugas'],
-            'deskripsi' => $validated['deskripsi'],
-            'prioritas' => $validated['prioritas'],
-            'status_tugas_id' => $validated['status_tugas_id'],
-            'deadline_id' => $deadline->id,
-            'karyawan_id' => $validated['karyawan_id'],
-            'kategori_tugas_id' => $validated['kategori_tugas_id'],
+        $project->update([
+            'nama_project' => $request->nama_project,
+            'karyawan_id' => $request->karyawan_id,
+            'status_project' => $request->status_project,
+            'deskripsi' => $request->deskripsi,
+            'deadline' => $request->deadline,
         ]);
 
-        return redirect()->route('project.show', $tugas->project_id)
-            ->with('success', 'Tugas berhasil diperbarui');
+        // Sinkronisasi anggota
+        $anggota = collect($request->anggota_id)->filter(fn($id) => $id != $request->karyawan_id);
+        $project->anggota()->sync($anggota);
+
+        // Update kategori tugas
+        $kategoriArr = json_decode($request->input('kategori_tugas'), true);
+        $values = array_map(fn($item) => trim(strtolower($item['value'])), $kategoriArr);
+
+        if (count($values) !== count(array_unique($values))) {
+            return back()->withInput()->withErrors(['kategori_tugas' => 'Kategori tugas tidak boleh duplikat.']);
+        }
+
+        // Hapus lama dan masukkan ulang
+        KategoriTugas::where('project_id', $project->id)->delete();
+
+        foreach ($kategoriArr as $kategori) {
+            KategoriTugas::create([
+                'project_id' => $project->id,
+                'nama_kategori' => $kategori['value'],
+            ]);
+        }
+
+        return redirect()->route('project.index')->with('success', 'Project berhasil diperbarui');
     }
+
 
 
     /**
