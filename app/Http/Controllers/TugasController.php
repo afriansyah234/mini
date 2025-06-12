@@ -50,7 +50,7 @@ class TugasController extends Controller
         return view('tugas.index', compact('tugass', 'projects'));
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()
