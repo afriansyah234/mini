@@ -40,6 +40,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/Thistory', [TugasController::class, 'history'])->name('tugas.history');
     Route::get('/project/{id}/detail', [ProjectController::class, 'detail'])->name('project.detail');
 
+    Route::get('/project/{project}/history-detail', [ProjectController::class, 'historyDetail'])->name('project.history-detail');
+
+
 });
 
 Auth::routes();

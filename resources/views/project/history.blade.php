@@ -16,6 +16,8 @@
                                 <h5 class="card-title">{{ $project->nama_project }}</h5>
                                 <p class="card-text">{{ $project->deskripsi }}</p>
                                 <p class="text-muted mb-0">Deadline: {{ $project->deadline ?? '-' }}</p>
+                                <a href="{{ route('project.history-detail', $project->id) }}"
+                                    class="btn btn-primary btn-sm mt-2">Detail</a>
                             </div>
                         </div>
                     </div>

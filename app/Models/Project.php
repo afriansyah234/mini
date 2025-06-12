@@ -21,7 +21,7 @@ class Project extends Model
     {
         return $this->belongsTo(Karyawan::class, 'karyawan_id');
     }
-     public function anggota()
+    public function anggota()
     {
         return $this->belongsToMany(Karyawan::class, 'anggota_project');
     }
@@ -48,5 +48,11 @@ class Project extends Model
             $q->where('status_project', 'selesai');
         });
     }
+
+    public function kategoriTugas()
+    {
+        return $this->hasMany(KategoriTugas::class);
+    }
+
 
 }

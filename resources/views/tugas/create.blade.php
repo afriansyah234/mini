@@ -32,6 +32,12 @@
                                 </div>
                             </div>
 
+                            <select name="kategori_tugas_id" class="form-select">
+                                @foreach ($kategoriTugas as $kategori)
+                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+                                @endforeach
+                            </select>
+
 
 
                             <div class="mb-3">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+    <!-- Tagify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
     <div class="container">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -42,15 +44,18 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label for="anggota_id">Pilih Anggota</label>
-                                    <select name="anggota_id[]" id="anggota_id" class="form-select select2" multiple required>
+                                    <select name="anggota_id[]" id="anggota_id" class="form-select select2" multiple
+                                        required>
                                         <option disabled>-- Pilih Anggota --</option>
                                         @foreach ($karyawans as $karyawan)
-                                            <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} - {{ $karyawan->departemen->nama_departemen }}</option>
+                                            <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} -
+                                                {{ $karyawan->departemen->nama_departemen }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     <div class="invalid-feedback">
-                                        Pilih anggota project   
-                                        </div> 
+                                        Pilih anggota project
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="status_project" class="form-label">Status</label>
@@ -77,6 +82,11 @@
                                         min="{{ now()->toDateString() }}" required>
                                 </div>
 
+                                <div class="col-md-12">
+                                    <label for="kategori_tugas" class="form-label">Kategori Tugas</label>
+                                    <input type="text" name="kategori_tugas" id="kategori_tugas" class="form-control"
+                                        placeholder="Tambah kategori dan tekan enter">
+                                </div>
 
 
                                 <div class="col-md-12">
@@ -104,28 +114,28 @@
     </div>
 @endsection
 @section('scripts')
-   <!-- Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-<script>
-    $(document).ready(function () {
-        $('#anggota_id').select2({
-            placeholder: "-- Pilih Anggota --",
-            allowClear: true,
-            width: '100%'
+    <script>
+        $(document).ready(function () {
+            $('#anggota_id').select2({
+                placeholder: "-- Pilih Anggota --",
+                allowClear: true,
+                width: '100%'
+            });
+            $('form').on('submit', function () {
+                const selected = $('#anggota_id').val();
+                if (!selected || selected.length === 0) {
+                    $('#anggota_id').addClass('is-invalid');
+                    return false; // cegah submit
+                } else {
+                    $('#anggota_id').removeClass('is-invalid');
+                }
+            });
         });
-         $('form').on('submit', function () {
-            const selected = $('#anggota_id').val();
-            if (!selected || selected.length === 0) {
-                $('#anggota_id').addClass('is-invalid');
-                return false; // cegah submit
-            } else {
-                $('#anggota_id').removeClass('is-invalid');
-            }
-        });
-    });
-</script>
+    </script>
     <script>
         (() => {
             'use strict'
@@ -143,4 +153,10 @@
             })
         })()
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script>
+        new Tagify(document.querySelector('#kategori_tugas'));
+    </script>
+
+
 @endsection

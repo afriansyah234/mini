@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Deadline;
 use App\Models\Karyawan;
 use App\Models\Status_tugas;
+use App\Models\KategoriTugas;
 use Illuminate\Http\Request;
 
 class TugasController extends Controller
@@ -55,9 +56,10 @@ class TugasController extends Controller
     public function create()
     {
         $project = Project::findOrFail(request()->project_id);
+        $kategoriTugas = KategoriTugas::where('project_id', $project->id)->get();
         $statuses = Status_tugas::all();
         $karyawan = Karyawan::all();
-        return view('tugas.create', compact('project', 'statuses', 'karyawan'));
+        return view('tugas.create', compact('project', 'statuses', 'karyawan', 'kategoriTugas'));
     }
 
     /**

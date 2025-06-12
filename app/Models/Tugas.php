@@ -16,7 +16,8 @@ class Tugas extends Model
         "prioritas",
         "status_tugas_id",
         'deadline_id',
-        'karyawan_id'
+        'karyawan_id',
+        'kategori_tugas_id'
     ];
 
     public function status()
@@ -38,4 +39,10 @@ class Tugas extends Model
     {
         return $this->belongsTo(Karyawan::class);
     }
+
+    public function kategoriTugas()
+    {
+        return $this->belongsTo(KategoriTugas::class);
+    }
+
 }

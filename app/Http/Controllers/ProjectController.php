@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Status_tugas;
 use App\Models\StatusProject;
 use App\Models\Tugas;
+use App\Models\KategoriTugas;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -58,6 +59,7 @@ class ProjectController extends Controller
             'deadline' => 'required|date|after_or_equal:today',
             'anggota_id' => 'required|array',
             'anggota_id.*' => 'exists:karyawans,id',
+            'kategori_tugas' => 'required|string' // Tagify mengirim dalam bentuk JSON string
         ]);
 
         $project = Project::create([
@@ -67,15 +69,38 @@ class ProjectController extends Controller
             'deskripsi' => $request->deskripsi,
             'deadline' => $request->deadline,
         ]);
-        $anggota = collect($request->anggota_id)->filter(function ($id) use ($request) {
-            return $id != $request->karyawan_id;
-        });
+
+        $anggota = collect($request->anggota_id)->filter(fn($id) => $id != $request->karyawan_id);
         $project->anggota()->attach($anggota);
 
-        
+        // Decode kategori_tugas (string JSON Tagify)
+        $kategoriArr = json_decode($request->input('kategori_tugas'), true);
+
+        // Cek duplikat dalam input
+        $values = array_map(fn($item) => trim(strtolower($item['value'])), $kategoriArr);
+        if (count($values) !== count(array_unique($values))) {
+            return redirect()->back()->withInput()->withErrors(['kategori_tugas' => 'Kategori tugas tidak boleh duplikat.']);
+        }
+
+        // Simpan ke DB setelah cek duplikat di dalam project
+        foreach ($kategoriArr as $kategori) {
+            $exists = KategoriTugas::where('project_id', $project->id)
+                ->whereRaw('LOWER(nama_kategori) = ?', [strtolower($kategori['value'])])
+                ->exists();
+
+            if (!$exists) {
+                KategoriTugas::create([
+                    'project_id' => $project->id,
+                    'nama_kategori' => $kategori['value'],
+                ]);
+            }
+        }
 
         return redirect()->route('project.index')->with('success', 'Project berhasil dibuat');
     }
+
+
+
 
     /**
      * Display the specified resource.
@@ -95,11 +120,11 @@ class ProjectController extends Controller
                 $tugas->status_tugas_id = $telatStatusId;
                 $tugas->save();
             }
-        }   
+        }
 
         $statuses = Status_tugas::all(); // kirim juga untuk dropdown
 
-        return view('project.show', compact('project', 'statuses',));
+        return view('project.show', compact('project', 'statuses', ));
     }
 
 
@@ -176,23 +201,40 @@ class ProjectController extends Controller
 
         return view('project.history', compact('projects'));
     }
- public function detail($id)
-{
-     $project = Project::with(['tugas.status'])->findOrFail($id); // penting: eager load 'status'
-    $penanggungjawab = $project->penanggungjawab;
-    $anggota = $project->anggota;
+    public function detail($id)
+    {
+        $project = Project::with('tugas.status')->findOrFail($id); // pastikan eager loading
+        $penanggungjawab = $project->penanggungjawab;
+        $anggota = $project->anggota;
 
-    $totaltugas = $project->tugas->count();
+        // Untuk chart
+        $statusSelesaiId = Status_tugas::where('nama_status', 'selesai')->value('id');
 
-    $tugasselesai = $project->tugas->filter(function($tugas) {
-        return $tugas->status && $tugas->status->nama_status === 'selesai';
-    })->count();
+        $totaltugas = $project->tugas->count();
+        $tugasselesai = $project->tugas->where('status_tugas_id', $statusSelesaiId)->count();
+        $tugasbelumselesai = $totaltugas - $tugasselesai;
 
-    $tugasbelumselesai = $totaltugas - $tugasselesai;
-
-    return view('project.detail', compact(
-        'project', 'anggota', 'penanggungjawab',
-        'totaltugas', 'tugasselesai', 'tugasbelumselesai'
-    ));
+        return view('project.detail', compact(
+            'project',
+            'anggota',
+            'penanggungjawab',
+            'totaltugas',
+            'tugasselesai',
+            'tugasbelumselesai'
+        ));
     }
+
+
+    public function historyDetail(Project $project)
+    {
+        // Pastikan hanya bisa diakses jika status project-nya 'selesai'
+        if (!$project->status || $project->status->status_project !== 'selesai') {
+            abort(403, 'Project ini belum selesai');
+        }
+
+        $tugas = $project->tugas()->with('status')->get(); // ambil semua tugas terkait
+        return view('project.history-detail', compact('project', 'tugas'));
+    }
+
+
 }
