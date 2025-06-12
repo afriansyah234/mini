@@ -64,7 +64,8 @@
                                             <div class="card mb-3 shadow-sm">
                                                 <div class="card-body">
                                                     <div class="mb-2">
-                                                        <h6 class="card-title mb-1">Judul tugas: {{ $tugas->judul_tugas }}</h6>
+                                                        <h6 class="card-title mb-1">{{ $tugas->judul_tugas }}</h6>
+
                                                         <p class="small text-muted mb-2">Deskripsi: {{ Str::limit($tugas->deskripsi, 60) }}</p>
                                                     </div>
 
@@ -73,8 +74,8 @@
                                                     @endif
 
                                                     @if($tugas->kategoriTugas)
-                                                    <p class="small mb-1">Kategori:{{ $tugas->kategoriTugas->nama_kategori }}</p>
-@endif
+                                                        <p class="small mb-1">Kategori:{{ $tugas->kategoriTugas->nama_kategori }}</p>
+                                                    @endif
 
 
                                                     <div class="mb-2">
@@ -96,8 +97,7 @@
                                                         <select name="status_tugas_id" class="form-select form-select-sm"
                                                             onchange="this.form.submit()">
                                                             @foreach($statuses as $statusOpt)
-                                                                <option value="{{ $statusOpt->id }}" {{ $tugas->status_tugas_id == $statusOpt->id ? 'selected' : '' }}>
-                                                                    {{ $statusOpt->nama_status }}
+                                                                <option value="{{ $statusOpt->id }}" {{ $tugas->status_tugas_id == $statusOpt->id ? 'selected' : '' }}>{{ $statusOpt->nama_status }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
