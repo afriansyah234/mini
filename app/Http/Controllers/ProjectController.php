@@ -134,13 +134,12 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        $tugas = Tugas::findOrFail($id);
-        $project = $tugas->project;
-        $karyawan = Karyawan::all();
+        $project = Project::findOrFail($id);
+        $karyawans = Karyawan::with('departemen')->get();
         $statuses = Status_tugas::all();
         $kategoriTugas = $project->kategoriTugas; // relasi 1 project -> banyak kategori
 
-        return view('tugas.edit', compact('tugas', 'project', 'karyawan', 'statuses', 'kategoriTugas'));
+        return view('project.edit', compact( 'project', 'karyawan', 'statuses', 'kategoriTugas'));
     }
 
     public function update(Request $request, $id)
