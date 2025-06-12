@@ -31,10 +31,19 @@
                     </ul>
                     <hr>
                     <div class="mt-5">
-                        <h5>Status Tugas</h5>
-                         <p>Selesai: {{ $tugasselesai }}, Belum: {{ $tugasbelumselesai }}, Total: {{ $totaltugas }}</p>
-                         <input type="text" class="knob" value="30" data-width="120" data-height="120"
-                           data-fgColor="#f56954">
+                        @php
+                        $total = $tugasselesai + $tugasbelumselesai ?: 1;
+                        $persenSelesai = ($tugasselesai / $total) * 100;
+                        $persenBelum = 100 - $persenSelesai;
+                    @endphp
+                    <p><strong>Total tugas : </strong> {{ $totaltugas }}</p>
+                    <p><strong>Tugas Belum Selesai: </strong> {{ $tugasbelumselesai }}</p>
+                    <p><strong>Tugas Selesai : </strong> {{ $tugasselesai }}</p>
+                    <div style="width: 100%; background: #f87171; border-radius: 20px; overflow: hidden;">
+                        <div style="width: {{ $persenSelesai }}%; background: #4ade80; padding: 10px; color: white; text-align: center;">
+                            {{ round($persenSelesai, 1) }}% Selesai
+                        </div>
+                    </div>
 
 
                     </div>
@@ -48,22 +57,6 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-@php
-    $selesai = (int) $tugasselesai;
-    $belum = (int) $tugasbelumselesai;
-    $total = max(1, (int) $totaltugas);
-@endphp
-
-<script>
-    const selesai = {{ $selesai }};
-    const belum = {{ $belum }};
-    const total = {{ $total }};
-</script>
 
 
-<script>
-    $(function () {
-        $(".knob").knob();
-    });
-</script>
 @endsection

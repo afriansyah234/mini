@@ -48,7 +48,7 @@
                     <a class="btn btn-success" href="{{ route('project.detail',$project->id) }}">
                                 <i class="fas fa-eye fa-sm"></i> Detail Project
                             </a>
-                            <a href="{{ route('project.show',$project->id) }}">
+                            <a class="btn btn-info" href="{{ route('project.show',$project->id) }}">
                 <i class="fas fa-info-circle"></i> card
                             </a>
         </div>
