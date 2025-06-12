@@ -31,7 +31,7 @@
                                     Masukkan judul tugas
                                 </div>
                             </div>
-
+                            <label for="">Kategori</label>
                             <select name="kategori_tugas_id" class="form-select">
                                 @foreach ($kategoriTugas as $kategori)
                                     <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
@@ -41,13 +41,14 @@
 
 
                             <div class="mb-3">
-                                <label for="karyawan_id" class="form-label">Yang bertugas</label>
-                                <select class="form-select @error('karyawan_id') is-invalid @enderror" id="karyawan_id"
+                               <label for="karyawan_id" class="form-label">Yang bertugas</label>
+                                <select class="form-select" id="karyawan_id"
                                     name="karyawan_id" required>
-                                    <option value="" disabled selected>Pilih karyawan</option>
-                                    @foreach($karyawan as $k)
-                                        <option value="{{ $k->id }}" {{ old('karyawan_id') == $k->id ? 'selected' : '' }}>
-                                            {{ $k->nama_karyawan }}-- {{ $k->departemen->nama_departemen }}
+                                    <option disabled selected>Pilih karyawan</option>
+
+                                   @foreach ($anggota as $a)
+                                        <option value="{{ $a->id }}" {{ old('karyawan_id') == $a->id ? 'selected' : '' }}>
+                                            {{ $a->nama_karyawan }} - {{ $a->departemen->nama_departemen }}
                                         </option>
                                     @endforeach
                                 </select>

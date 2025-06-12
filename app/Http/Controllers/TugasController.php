@@ -58,8 +58,8 @@ class TugasController extends Controller
         $project = Project::findOrFail(request()->project_id);
         $kategoriTugas = KategoriTugas::where('project_id', $project->id)->get();
         $statuses = Status_tugas::all();
-        $karyawan = Karyawan::all();
-        return view('tugas.create', compact('project', 'statuses', 'karyawan', 'kategoriTugas'));
+        $anggota = $project->anggota()->get(); // Ambil anggota saja, bukan penanggung jawab
+       return view('tugas.create', compact('project', 'statuses', 'anggota', 'kategoriTugas'));
     }
 
     /**
@@ -75,8 +75,21 @@ class TugasController extends Controller
             'status_tugas_id' => 'required|exists:status_tugas,id',
             'deadline' => 'required|date|after:today',
             'karyawan_id' => 'required|exists:karyawans,id',
+            'kategori_tugas_id' => 'required|exists:kategori_tugas,id',
 
         ]);
+        $project = Project::with('anggota')->findOrFail($validated['project_id']);
+
+    // Validasi apakah karyawan_id adalah anggota (bukan penanggung jawab)
+    $isAnggota = $project->anggota
+    ->where('id', $validated['karyawan_id'])
+    ->where('id', '!=', $project->karyawan_id)
+    ->isNotEmpty();
+
+
+    if (! $isAnggota) {
+        return back()->withErrors(['karyawan_id' => 'Karyawan bukan anggota (atau dia adalah penanggung jawab).'])->withInput();
+    }
 
         $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
 
@@ -88,6 +101,8 @@ class TugasController extends Controller
             'status_tugas_id' => $validated['status_tugas_id'],
             'deadline_id' => $deadline->id,
             'karyawan_id' => $validated['karyawan_id'],
+            'kategori_tugas_id' => $validated['kategori_tugas_id'],
+
         ]);
 
         return redirect()->route('project.show', $validated['project_id'])->with('success', 'Tugas berhasil ditambahkan');
