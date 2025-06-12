@@ -8,6 +8,7 @@ use App\Models\Status_tugas;
 use App\Models\StatusProject;
 use App\Models\Tugas;
 use App\Models\KategoriTugas;
+use App\Models\Deadline;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -131,36 +132,46 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit($id)
     {
-        $statusProjects = StatusProject::all();
-        $karyawans = Karyawan::all();
+        $tugas = Tugas::findOrFail($id);
+        $project = $tugas->project;
+        $karyawan = Karyawan::all();
+        $statuses = Status_tugas::all();
+        $kategoriTugas = $project->kategoriTugas; // relasi 1 project -> banyak kategori
 
-        return view('project.edit', compact('project', 'statusProjects', 'karyawans'));
+        return view('tugas.edit', compact('tugas', 'project', 'karyawan', 'statuses', 'kategoriTugas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama_project' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'status_project' => 'required|exists:status_projects,id',
-            'karyawan_id' => 'required|exists:karyawans,id'
+            'judul_tugas' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'prioritas' => 'required|in:rendah,sedang,tinggi,krisis',
+            'status_tugas_id' => 'required|exists:status_tugas,id',
+            'deadline' => 'required|date|after:today',
+            'karyawan_id' => 'required|exists:karyawans,id',
+            'kategori_tugas_id' => 'required|exists:kategori_tugas,id',
         ]);
 
-        $project->update([
-            'nama_project' => $validated['nama_project'],
+        $tugas = Tugas::findOrFail($id);
+        $deadline = Deadline::firstOrCreate(['tanggal' => $request->deadline]);
+
+        $tugas->update([
+            'judul_tugas' => $validated['judul_tugas'],
             'deskripsi' => $validated['deskripsi'],
-            'status_project' => $validated['status_project'],
-            'karyawan_id' => $validated['karyawan_id']
+            'prioritas' => $validated['prioritas'],
+            'status_tugas_id' => $validated['status_tugas_id'],
+            'deadline_id' => $deadline->id,
+            'karyawan_id' => $validated['karyawan_id'],
+            'kategori_tugas_id' => $validated['kategori_tugas_id'],
         ]);
 
-        return redirect()->route('project.index')
-            ->with('success', 'Project update berhasil.');
+        return redirect()->route('project.show', $tugas->project_id)
+            ->with('success', 'Tugas berhasil diperbarui');
     }
+
 
     /**
      * Remove the specified resource from storage.

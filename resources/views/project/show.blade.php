@@ -72,6 +72,11 @@
                                                         <p class="small mb-2">Yang bertugas: {{ $tugas->karyawan->nama_karyawan }}</p>
                                                     @endif
 
+                                                    @if($tugas->kategoriTugas)
+                                                    <p class="small mb-1">Kategori:{{ $tugas->kategoriTugas->nama_kategori }}</p>
+@endif
+
+
                                                     <div class="mb-2">
                                                         <span class="text-muted">Deadline:
                                                             {{ \Carbon\Carbon::parse($tugas->deadline->tanggal)->translatedFormat('d F Y') }}</span>
