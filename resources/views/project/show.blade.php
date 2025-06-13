@@ -66,9 +66,11 @@
                                                     <div class="mb-2">
                                                         <h6 class="card-title mb-1">{{ $tugas->judul_tugas }}</h6>
 
-                                                        <p class="small text-muted mb-2">Deskripsi: {{ Str::limit($tugas->deskripsi, 60) }}</p>
+                                                        
                                                     </div>
-
+                                                    <div class="mb-2">
+                                                    <p class="small ms-1">Deskripsi: {{ Str::limit($tugas->deskripsi, 60) }}</p>
+                                                    </div>
                                                     @if($tugas->karyawan)
                                                         <p class="small mb-2">Yang bertugas: {{ $tugas->karyawan->nama_karyawan }}</p>
                                                     @endif

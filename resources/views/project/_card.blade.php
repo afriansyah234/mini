@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="card-body d-flex flex-column">
-            <p class="card-text"><strong>Deskripsi :</strong> {{ $project->deskripsi }}</p>
+            <p class="card-text mb-2"><strong>Deskripsi :</strong> {{ $project->deskripsi }}</p>
             <p><strong>Status : </strong>
                 @php
                     $today = \Carbon\Carbon::now();
