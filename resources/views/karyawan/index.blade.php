@@ -47,6 +47,9 @@
                         <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">
                             <i class="fas fa-plus me-2"></i>Tambah Karyawan
                         </a>
+                        <a href="{{ route('departemen.index') }}"  class="btn btn-secondary mb-3">
+                                <i class="fas fa-building me-2"></i>Kelola Departemen
+                        </a>
 
                         <table class="table table-bordered shadow">
                             <thead>

@@ -38,8 +38,13 @@
 
                             <!-- Departemen -->
                             <div class="col-12">
-                                <label for="departemen" class="form-label">Departemen</label>
-                                <input type="text" class="form-control" id="departemen" name="departemen" required>
+                                <label for="departemen" class="form-label">Departemen</label>    
+                                <select class="form-control" id="departemen" name="departemen">
+                                    <option disabled selected>-- Pilih Departemen --</option>
+                                    @foreach ($departemens as $departemen)
+                                        <option value="{{ $departemen->id }}">{{ $departemen->nama_departemen }}</option>
+                                    @endforeach
+                                </select>
                                 <div class="invalid-feedback">
                                     Departemen harus diisi.
                                 </div>

@@ -43,7 +43,7 @@
 
                 <!-- Kolom Kanan -->
                 <div style="flex: 1;" class="card">
-                    <div class="card-header bg-info text-white text-center">
+                    <div class="card-header  text-white text-center" style="background-color: #88CCF1;">
                         <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i> Statistik Tugas</h5>
                         
                     </div> 

@@ -24,7 +24,7 @@ class KaryawanController extends Controller
                         $q->where('nama_departemen', 'like', "%{$search}%");
                     });
             })
-            ->get();
+            ->paginate(10);
 
         $departemen = Departemen::all(); // Untuk dropdown/form lainnya
 
@@ -37,7 +37,8 @@ class KaryawanController extends Controller
     public function create()
     {
         $karyawans = Karyawan::all();
-        return view('karyawan.create', compact('karyawans'));
+        $departemens = Departemen::all(); // Ambil semua departemen untuk dropdown
+        return view('karyawan.create', compact('karyawans','departemens'));
     }
 
     /**

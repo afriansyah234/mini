@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label">Pilih Penanggungjawab</label>
-                                    <select name="karyawan_id" id="karyawan_id" class="form-control" required>
+                                    <select name="karyawan_id" id="karyawan_id" class="form-control"  required>
                                         <option disabled selected>-- Pilih Karyawan --</option>
                                         @foreach ($karyawans as $karyawan)
                                             <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan }}</option>
@@ -43,10 +43,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <label for="anggota_id">Pilih Anggota</label>
-                                    <select name="anggota_id[]" id="anggota_id" class="form-select select2" multiple
+                                    <div class="form-group">
+                                       <label for="anggota_id">Pilih Anggota</label>
+                                    <select name="anggota_id[]" id="anggota_id" class="select2" data-placeholder="-- Pilih Anggota --" multiple="multiple" style="width: 100%;"
                                         required>
-                                        <option disabled>-- Pilih Anggota --</option>
                                         @foreach ($karyawans as $karyawan)
                                             <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} -
                                                 {{ $karyawan->departemen->nama_departemen }}
@@ -55,7 +55,9 @@
                                     </select>
                                     <div class="invalid-feedback">
                                         Pilih anggota project
+                                    </div> 
                                     </div>
+                                    
                                 </div>
                                 <div class="mb-3">
                                     <label for="status_project" class="form-label">Status</label>
@@ -114,28 +116,20 @@
     </div>
 @endsection
 @section('scripts')
-    <!-- Select2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/bootstrap-duallistbox.min.css">
+    <!-- Select2 CSS & JS -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('#anggota_id').select2({
-                placeholder: "-- Pilih Anggota --",
-                allowClear: true,
-                width: '100%'
-            });
-            $('form').on('submit', function () {
-                const selected = $('#anggota_id').val();
-                if (!selected || selected.length === 0) {
-                    $('#anggota_id').addClass('is-invalid');
-                    return false; // cegah submit
-                } else {
-                    $('#anggota_id').removeClass('is-invalid');
-                }
-            });
-        });
-    </script>
+<script>
+  $(function () {
+    $('.select2').select2();
+  });
+</script>
+
+
     <script>
         (() => {
             'use strict'

@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     ]);
     Route::resource('project', ProjectController::class);
     Route::resource('laporan', LaporanController::class)->except(['create']);
+    Route::resource('departemen', \App\Http\Controllers\DepartemenController::class);
 
     Route::post('/tugas/{tugas}/update-status', [ProjectController::class, 'updateStatus'])
         ->name('tugas.update-status');
