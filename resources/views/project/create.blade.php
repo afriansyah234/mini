@@ -45,7 +45,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                        <label for="anggota_id">Pilih Anggota</label>
-                                    <select name="anggota_id[]" id="anggota_id" class="select2" data-placeholder="-- Pilih Anggota --" multiple="multiple" style="width: 100%;"
+                                    <select name="anggota_id[]" id="anggota_id" class="select2" data-placeholder="-- Pilih Anggota --" multiple="multiple" style="width: 100%   ;"
                                         required>
                                         @foreach ($karyawans as $karyawan)
                                             <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} -
