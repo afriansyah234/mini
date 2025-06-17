@@ -164,7 +164,7 @@ class ProjectController extends Controller
             'karyawan_id' => $request->karyawan_id,
             'status_project' => $request->status_project,
             'deskripsi' => $request->deskripsi,
-            'deadline' => $request->deadline,
+            'deadline' => $request->deadline, 
         ]);
 
         // Sinkronisasi anggota
