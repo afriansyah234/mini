@@ -4,10 +4,10 @@
     <div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="login-box w-100" style="max-width:400px;">
             <div class="login-box mx-auto text-center">
-                <div class="login-logo text-center mb-4">
+                <div class="card">
+                <div class="card-header text-center mb-4 bg-primary text-white">
                     <b>Manajemen Tugas dan Project</b>
                 </div>
-                <div class="card">
                     <div class="card-body">
                         <p class="login-box-msg">Mohon Untuk login terlebih dahulu</p>
                         <form method="POST" action="{{ route('login') }}">
@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary btn-block">
                                     {{ __('Login') }}
                                 </button>
                             </div>
@@ -72,9 +72,14 @@
                                     </a>
                                 @endif
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-12 text-center">
+                                    <p>Belum punya akun? <a href="{{ route('register') }}">Daftar Sekarang</a></p>
+                                </div>
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
