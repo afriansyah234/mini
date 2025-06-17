@@ -35,6 +35,7 @@ class DepartemenController extends Controller
         Departemen::create([
             'nama_departemen'=> $request->nama_departemen,
         ]);
+        return redirect()->route('departemen.index')->with('success', 'Departemen Berhasil di buat');
     }
 
     /**

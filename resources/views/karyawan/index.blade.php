@@ -3,9 +3,9 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Manajemen Karyawan</h1>
-                </div>
+                <div class="col-sm-12 d-flex justify-content-between align-items-center">
+                    <h1 class="p-3"><b>Manajemen Karyawan</b></h1>
+                   
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">home</li>
@@ -54,13 +54,16 @@
                             </div>
                         @endif
                     </form>
-
-                    <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">
-                        <i class="fas fa-plus me-2"></i>Tambah Karyawan
-                    </a>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                     
                     <a href="{{ route('departemen.index') }}" class="btn btn-secondary mb-3">
                         <i class="fas fa-building me-2"></i>Kelola Departemen
                     </a>
+                     <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">
+                        <i class="fas fa-plus me-2"></i>Tambah Karyawan
+                    </a>
+
+                    </div>
 
                     <table class="table table-bordered shadow">
                         <thead>

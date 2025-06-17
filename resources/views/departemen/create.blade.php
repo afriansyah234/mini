@@ -1,9 +1,10 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container">
-    <div class="card mt-2">
-        <div class="card-header">
-            <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Departemen Baru</h4>
+    <div class="card mt-5 mx-auto" style="width: 400px;">
+        <div class="card-header text-center bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i><b>Tambah Departemen Baru</b></h5>
         </div>
         <div class="card-body">
             @if ($errors->any())
@@ -23,16 +24,16 @@
                     <input type="text" class="form-control" id="nama_departemen" name="nama_departemen" required>
                     <div class="invalid-feedback">
                         Nama departemen harus diisi.
-                        </div> 
-                        </div>
+                    </div> 
+                </div>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
                     <a href="{{ route('departemen.index') }}" class="btn btn-secondary me-md-2">
                         <i class="fas fa-arrow-left me-1"></i> Kembali
                     </a>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-success">
                         <i class="fas fa-save me-1"></i> Simpan
                     </button>
-                    </div>
+                </div>
             </form>
         </div>
     </div>
