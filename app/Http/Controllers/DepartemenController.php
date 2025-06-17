@@ -12,7 +12,7 @@ class DepartemenController extends Controller
      */
     public function index()
     {
-        $departemens = Departemen::all();
+        $departemens = Departemen::paginate(5); 
         return view('departemen.index', compact('departemens'));
     }
 
@@ -29,12 +29,11 @@ class DepartemenController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_departemen'=> 'required|string',
         ]);
-        Departemen::create([
-            'nama_departemen'=> $request->nama_departemen,
-        ]);
+        $validated['nama_departemen']= strtoupper($validated['nama_departemen']);
+        Departemen::create($validated);
         return redirect()->route('departemen.index')->with('success', 'Departemen Berhasil di buat');
     }
 
@@ -51,15 +50,21 @@ class DepartemenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $departemen = Departemen::findOrFail($id);
+        $departemen->edit();
+        return view('departemen.edit',compact('departemen'));   
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $validated = $request->validate(['nama_departemen'=> 'required|string']);
+        $validated['nama_departemen'] = strtoupper($validated['nama_departemen']);
+        $departemen = Departemen::findOrFail($id);
+        $departemen->update($validated);
+        return redirect()->route("departemen.index")->with('success','Departemen Berhasil di update');
     }
 
     /**

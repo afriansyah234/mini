@@ -50,15 +50,12 @@ class KaryawanController extends Controller
         $validasi = $request->validate([
             'nama_karyawan' => 'required',
             'email' => 'required|email|unique:karyawans,email',
-            'departemen' => 'required|string'
-        ]);
-        $departemen = Departemen::firstOrCreate([
-            'nama_departemen' => $request->departemen
+            'departemen_id' => 'required|string'
         ]);
         Karyawan::create([
             'nama_karyawan' => $validasi['nama_karyawan'],
             'email' => $validasi['email'],
-            'departemen_id' => $departemen->id // Asumsi ada relasi ke tabel departemen
+            'departemen_id' => $validasi['departemen_id'] // Asumsi ada relasi ke tabel departemen
         ]);
 
         return redirect()->route('karyawan.index')->with('success', 'Karyawan berhasil ditambahkan');
@@ -90,19 +87,13 @@ class KaryawanController extends Controller
         $validasi = $request->validate([
             'nama_karyawan' => 'required',
             'email' => 'required|email|unique:karyawans,email,' . $karyawan->id,
-            'departemen' => 'required|string'
+            'departemen_id' => 'required|string'
         ]);
-
-        // Cari atau buat departemen baru
-        $departemen = Departemen::firstOrCreate([
-            'nama_departemen' => $request->departemen
-        ]);
-
         // Update data karyawan
         $karyawan->update([
             'nama_karyawan' => $validasi['nama_karyawan'],
             'email' => $validasi['email'],
-            'departemen_id' => $departemen->id
+            'departemen_id' => $validasi['departemen_id']
         ]);
 
         return redirect()->route('karyawan.index')->with('success', 'Data karyawan berhasil diperbarui');

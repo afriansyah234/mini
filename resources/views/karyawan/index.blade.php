@@ -56,7 +56,7 @@
                     </form>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                      
-                    <a href="{{ route('departemen.index') }}" class="btn btn-secondary mb-3">
+                    <a href="{{ route('departemen.index') }}" class="btn btn-info text-white mb-3">
                         <i class="fas fa-building me-2"></i>Kelola Departemen
                     </a>
                      <a href="{{ route('karyawan.create') }}" class="btn btn-success mb-3">

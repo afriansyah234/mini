@@ -35,7 +35,7 @@
                                     <select name="karyawan_id" id="karyawan_id" class="form-control"  required>
                                         <option disabled selected>-- Pilih Karyawan --</option>
                                         @foreach ($karyawans as $karyawan)
-                                            <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan }}</option>
+                                            <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan }} - {{ $karyawan->departemen->nama_departemen }}</option>
                                         @endforeach
                                     </select>
                                     <div class="invalid-feedback">

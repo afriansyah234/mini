@@ -44,8 +44,8 @@
 
                                 <!-- Departemen -->
                                 <div class="col-12">
-                                    <label for="departemen" class="form-label">Departemen</label>
-                                    <input type="text" class="form-control" id="departemen" name="departemen" required
+                                    <label for="departemen_id" class="form-label">Departemen</label>
+                                    <input type="text" class="form-control" id="departemen_id" name="departemen_id" required
                                         value="{{ $karyawans->departemen->nama_departemen }}">
                                     <div class="invalid-feedback">
                                         Departemen harus diisi.

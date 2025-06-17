@@ -38,8 +38,8 @@
 
                             <!-- Departemen -->
                             <div class="col-12">
-                                <label for="departemen" class="form-label">Departemen</label>    
-                                <select class="form-control" id="departemen" name="departemen">
+                                <label for="departemen_id" class="form-label">Departemen</label>    
+                                <select class="form-control" id="departemen_id" name="departemen_id">
                                     <option disabled selected>-- Pilih Departemen --</option>
                                     @foreach ($departemens as $departemen)
                                         <option value="{{ $departemen->id }}">{{ $departemen->nama_departemen }}</option>
