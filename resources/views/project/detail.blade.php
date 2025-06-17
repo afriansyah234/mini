@@ -28,7 +28,7 @@
                     <p>{{ $penanggungjawab->nama_karyawan }} – {{ $penanggungjawab->departemen->nama_departemen }}</p>
                     <hr>
 
-                    <h5><strong>Anggota yang Terlibat</strong></h5>
+                    <h5><strong>Anggota yang Terlibat</strong></h5> 
                     <ul>
                         @if($anggota->isNotEmpty())
                             @foreach ($anggota as $a)
