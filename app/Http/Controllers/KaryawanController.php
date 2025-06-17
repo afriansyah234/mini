@@ -23,10 +23,11 @@ class KaryawanController extends Controller
                     ->orWhereHas('departemen', function ($q) use ($search) {
                         $q->where('nama_departemen', 'like', "%{$search}%");
                     });
-            })
-            ->paginate(10);
+            })->paginate(5); // Menggunakan pagination untuk menghindari masalah performa
 
         $departemen = Departemen::all(); // Untuk dropdown/form lainnya
+
+
 
         return view('karyawan.index', compact('karyawans', 'departemen'));
     }
@@ -38,7 +39,7 @@ class KaryawanController extends Controller
     {
         $karyawans = Karyawan::all();
         $departemens = Departemen::all(); // Ambil semua departemen untuk dropdown
-        return view('karyawan.create', compact('karyawans','departemens'));
+        return view('karyawan.create', compact('karyawans', 'departemens'));
     }
 
     /**

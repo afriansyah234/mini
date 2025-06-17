@@ -45,8 +45,9 @@
 
     <!-- Tagify CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
-     <!-- Bootstrap4 Duallistbox -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/bootstrap-duallistbox.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/bootstrap-duallistbox.min.css">
 
 
 
@@ -58,13 +59,15 @@
 
 
 
-<body class="hold-transition sidebar-mini">
-    <div id="wrapper">
-        @include('partials.sidebar')
-        @include('partials.navbar')
-        <main class="content-wrapper">
+<body class="hold-transition sidebar-mini sidebar-collapse">
+    <div class="wrapper">
+        @if(!in_array(Route::currentRouteName(), ['login', 'register', 'password.request', 'password.reset']))
+            @include('partials.sidebar')
+            @include('partials.navbar')
+        @endif
+        <div class="content-wrapper">
             @yield('content')
-        </main>
+        </div>
 
     </div>
     <!-- Bootstrap JS (sudah kamu pakai sebelumnya, ini oke) -->

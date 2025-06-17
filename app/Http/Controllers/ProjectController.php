@@ -111,6 +111,8 @@ class ProjectController extends Controller
         // Tambahkan logika ini sebelum mengirim ke view
         $telatStatusId = Status_tugas::where('nama_status', 'telat')->value('id');
 
+
+
         foreach ($project->tugas as $tugas) {
             if (
                 $tugas->deadline &&
