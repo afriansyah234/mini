@@ -67,7 +67,7 @@
 
 
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
+<body class="hold-transition sidebar-mini sidebar-collapse ">
     <div class="wrapper">
         @if(!in_array(Route::currentRouteName(), ['login', 'register', 'password.request', 'password.reset']))
             @include('partials.sidebar')

@@ -26,15 +26,14 @@
     'selesai' => 'success',
     'telat' => 'danger'
     ];
-    $statusLabels = [
-    'belum dimulai' => 'Backlog',
-    'dalam pengerjaan' => 'To Do',
-    'menunggu review' => 'In Progress',
-    'selesai' => 'Done',
-    'telat' => 'Telat'
-    ];
     $statusList = array_keys($statusColors);
   @endphp
+
+    <div class="text-end">
+    <a href="{{ route('tugas.create', ['project_id' => $project->id]) }}" class="btn btn-primary mb-3">
+      <i class="fas fa-plus-circle"></i>
+    </a>
+    </div>
 
     <div class="container-fluid h-100">
     <div class="d-flex flex-nowrap" style="overflow-x:auto; gap: 1rem;">
@@ -42,7 +41,7 @@
       <div class="card card-row card-{{ $statusColors[$status] }}"
       style="min-width:340px; max-width:370px; flex:0 0 auto;">
       <div class="card-header {{ $status === 'menunggu review' ? 'bg-info' : '' }}">
-      <h3 class="card-title">{{ $statusLabels[$status] }}</h3>
+      <h3 class="card-title">{{ $status }}</h3>
       </div>
       <div class="card-body">
       @php
@@ -61,7 +60,6 @@
       <div class="card-header">
       <h5 class="card-title">{{ $tugas->nama_tugas }}</h5>
       <div class="card-tools">
-      <a href="#" class="btn btn-tool btn-link">#{{ $tugas->id }}</a>
       <a href="{{ route('tugas.edit', $tugas->id) }}" class="btn btn-tool">
         <i class="fas fa-pen"></i>
       </a>
@@ -72,6 +70,7 @@
       <p><strong>Deskripsi:</strong> {{ $tugas->deskripsi }}</p>
       <p><strong>Deadline:</strong>
       {{ $tugas->deadline ? $tugas->deadline->tanggal->format('d M Y') : 'Tidak ada' }}</p>
+      <p><strong>yang mengerjakan:</strong>{{ $tugas->karyawan->1nama_karyawan }}</p>
       <span class="badge {{ [
       'rendah' => 'bg-secondary',
       'sedang' => 'bg-warning',

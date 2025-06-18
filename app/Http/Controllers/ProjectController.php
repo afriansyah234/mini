@@ -60,7 +60,6 @@ class ProjectController extends Controller
             'deadline' => 'required|date|after_or_equal:today',
             'anggota_id' => 'required|array',
             'anggota_id.*' => 'exists:karyawans,id',
-            'kategori_tugas' => 'required|string' // Tagify mengirim dalam bentuk JSON string
         ]);
 
         $project = Project::create([
@@ -72,30 +71,7 @@ class ProjectController extends Controller
         ]);
 
         $anggota = collect($request->anggota_id)->filter(fn($id) => $id != $request->karyawan_id);
-        $project->anggota()->attach($anggota);
-
-        // Decode kategori_tugas (string JSON Tagify)
-        $kategoriArr = json_decode($request->input('kategori_tugas'), true);
-
-        // Cek duplikat dalam input
-        $values = array_map(fn($item) => trim(strtolower($item['value'])), $kategoriArr);
-        if (count($values) !== count(array_unique($values))) {
-            return redirect()->back()->withInput()->withErrors(['kategori_tugas' => 'Kategori tugas tidak boleh duplikat.']);
-        }
-
-        // Simpan ke DB setelah cek duplikat di dalam project
-        foreach ($kategoriArr as $kategori) {
-            $exists = KategoriTugas::where('project_id', $project->id)
-                ->whereRaw('LOWER(nama_kategori) = ?', [strtolower($kategori['value'])])
-                ->exists();
-
-            if (!$exists) {
-                KategoriTugas::create([
-                    'project_id' => $project->id,
-                    'nama_kategori' => $kategori['value'],
-                ]);
-            }
-        }
+        $project->anggota()->sync($anggota);
 
         return redirect()->route('project.index')->with('success', 'Project berhasil dibuat');
     }
@@ -138,12 +114,9 @@ class ProjectController extends Controller
     {
         $karyawans = Karyawan::with('departemen')->get();
         $statuss = StatusProject::all();
-        $project->load('anggota'); // Load relasi anggota
+        $project->load('anggota');
 
-        $kategoriTugas = KategoriTugas::where('project_id', $project->id)->get();
-        $kategoriTugasJson = $kategoriTugas->map(fn($k) => ['value' => $k->nama_kategori]);
-
-        return view('project.edit', compact('project', 'karyawans', 'statuss', 'kategoriTugasJson'));
+        return view('project.edit', compact('project', 'karyawans', 'statuss'));
     }
 
     public function update(Request $request, Project $project)
@@ -156,7 +129,6 @@ class ProjectController extends Controller
             'deadline' => 'required|date|after_or_equal:today',
             'anggota_id' => 'required|array',
             'anggota_id.*' => 'exists:karyawans,id',
-            'kategori_tugas' => 'required|string'
         ]);
 
         $project->update([
@@ -171,23 +143,8 @@ class ProjectController extends Controller
         $anggota = collect($request->anggota_id)->filter(fn($id) => $id != $request->karyawan_id);
         $project->anggota()->sync($anggota);
 
-        // Update kategori tugas
-        $kategoriArr = json_decode($request->input('kategori_tugas'), true);
-        $values = array_map(fn($item) => trim(strtolower($item['value'])), $kategoriArr);
-
-        if (count($values) !== count(array_unique($values))) {
-            return back()->withInput()->withErrors(['kategori_tugas' => 'Kategori tugas tidak boleh duplikat.']);
-        }
-
         // Hapus lama dan masukkan ulang
         KategoriTugas::where('project_id', $project->id)->delete();
-
-        foreach ($kategoriArr as $kategori) {
-            KategoriTugas::create([
-                'project_id' => $project->id,
-                'nama_kategori' => $kategori['value'],
-            ]);
-        }
 
         return redirect()->route('project.index')->with('success', 'Project berhasil diperbarui');
     }

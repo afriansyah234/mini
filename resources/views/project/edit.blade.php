@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card">
-                    <div class="card-header bg-warning text-dark">
+                    <div class="card-header bg-primary">
                         <h4 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Project</h4>
                     </div>
                     <div class="card-body shadow-lg">
@@ -83,11 +83,6 @@
                                     <input type="date" name="deadline" class="form-control"
                                         min="{{ now()->toDateString() }}" value="{{ old('deadline', $project->deadline) }}"
                                         required>
-                                </div>
-                                <div class="col-md-12">
-                                    <label for="kategori_tugas" class="form-label">Kategori Tugas</label>
-                                    <input type="text" name="kategori_tugas" id="kategori_tugas" class="form-control"
-                                        value='@json($kategoriTugasJson)'>
                                 </div>
                                 <div class="col-md-12">
                                     <label for="" class="form-label">Deskripsi</label>

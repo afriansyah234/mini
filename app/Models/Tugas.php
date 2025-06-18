@@ -39,10 +39,4 @@ class Tugas extends Model
     {
         return $this->belongsTo(Karyawan::class);
     }
-
-    public function kategoriTugas()
-    {
-        return $this->belongsTo(KategoriTugas::class);
-    }
-
 }

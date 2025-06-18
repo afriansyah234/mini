@@ -10,7 +10,7 @@
                     <div class="card-header bg-primary text-white">
                         <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Tambah Tugas Baru</h4>
                     </div>
- 
+
                     <div class="card-body">
                         <form action="{{ route('tugas.store') }}" method="POST" class="needs-validation" novalidate>
                             @csrf
@@ -31,22 +31,15 @@
                                     Masukkan judul tugas
                                 </div>
                             </div>
-                            <label for="">Kategori</label>
-                            <select name="kategori_tugas_id" class="form-select">
-                                @foreach ($kategoriTugas as $kategori)
-                                    <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
-                                @endforeach
-                            </select>
 
 
 
                             <div class="mb-3">
-                               <label for="karyawan_id" class="form-label">Yang bertugas</label>
-                                <select class="form-select" id="karyawan_id"
-                                    name="karyawan_id" required>
+                                <label for="karyawan_id" class="form-label">Yang bertugas</label>
+                                <select class="form-select" id="karyawan_id" name="karyawan_id" required>
                                     <option disabled selected>Pilih karyawan</option>
 
-                                   @foreach ($anggota as $a)
+                                    @foreach ($anggota as $a)
                                         <option value="{{ $a->id }}" {{ old('karyawan_id') == $a->id ? 'selected' : '' }}>
                                             {{ $a->nama_karyawan }} - {{ $a->departemen->nama_departemen }}
                                         </option>

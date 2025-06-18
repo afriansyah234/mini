@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="" class="form-label">Pilih Penanggungjawab</label>
-                                    <select name="karyawan_id" id="karyawan_id" class="form-control"  required>
+                                    <select name="karyawan_id" id="karyawan_id" class="form-control" required>
                                         <option disabled selected>-- Pilih Karyawan --</option>
                                         @foreach ($karyawans as $karyawan)
                                             <option value="{{ $karyawan->id}}">{{ $karyawan->nama_karyawan }} - {{ $karyawan->departemen->nama_departemen }}</option>
@@ -44,20 +44,21 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                       <label for="anggota_id">Pilih Anggota</label>
-                                    <select name="anggota_id[]" id="anggota_id" class="select2" data-placeholder="-- Pilih Anggota --" multiple="multiple" style="width: 100%   ;"
-                                        required>
-                                        @foreach ($karyawans as $karyawan)
-                                            <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} -
-                                                {{ $karyawan->departemen->nama_departemen }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Pilih anggota project
-                                    </div> 
+                                        <label for="anggota_id">Pilih Anggota</label>
+                                        <select name="anggota_id[]" id="anggota_id" class="select2"
+                                            data-placeholder="-- Pilih Anggota --" multiple="multiple"
+                                            style="width: 100%   ;" required>
+                                            @foreach ($karyawans as $karyawan)
+                                                <option value="{{ $karyawan->id }}">{{ $karyawan->nama_karyawan }} -
+                                                    {{ $karyawan->departemen->nama_departemen }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Pilih anggota project
+                                        </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="status_project" class="form-label">Status</label>
@@ -82,12 +83,6 @@
                                     <label for="deadline" class="form-label">Deadline Project</label>
                                     <input type="date" name="deadline" class="form-control"
                                         min="{{ now()->toDateString() }}" required>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <label for="kategori_tugas" class="form-label">Kategori Tugas</label>
-                                    <input type="text" name="kategori_tugas" id="kategori_tugas" class="form-control"
-                                        placeholder="Tambah kategori dan tekan enter">
                                 </div>
 
 
@@ -117,17 +112,19 @@
 @endsection
 @section('scripts')
     <!-- Bootstrap4 Duallistbox -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/bootstrap-duallistbox.min.css">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/jquery.bootstrap-duallistbox.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-duallistbox/4.0.2/bootstrap-duallistbox.min.css">
     <!-- Select2 CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<script>
-  $(function () {
-    $('.select2').select2();
-  });
-</script>
+    <script>
+        $(function () {
+            $('.select2').select2();
+        });
+    </script>
 
 
     <script>
