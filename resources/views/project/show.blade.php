@@ -27,7 +27,7 @@
     'telat' => 'danger'
     ];
     $statusList = array_keys($statusColors);
-  @endphp
+    @endphp
 
     <div class="text-end">
     <a href="{{ route('tugas.create', ['project_id' => $project->id]) }}" class="btn btn-primary mb-3">
@@ -70,7 +70,7 @@
       <p><strong>Deskripsi:</strong> {{ $tugas->deskripsi }}</p>
       <p><strong>Deadline:</strong>
       {{ $tugas->deadline ? $tugas->deadline->tanggal->format('d M Y') : 'Tidak ada' }}</p>
-      <p><strong>yang mengerjakan:</strong>{{ $tugas->karyawan->1nama_karyawan }}</p>
+      <p><strong>yang mengerjakan:</strong>{{ $tugas->karyawan->nama_karyawan }}</p>
       <span class="badge {{ [
       'rendah' => 'bg-secondary',
       'sedang' => 'bg-warning',
